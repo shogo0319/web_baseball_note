@@ -3,7 +3,10 @@
 @section('content')
 
 <div class="d-flex flex-column justify-content-center align-items-center">
-  <div class="container">
+  <div class="container col-8">
+    <div class="text-center">
+        <h3 class="my-5 text-secondary">ノート作成フォーム</h3>
+    </div>
    <form action="{{ route('note_store') }}" method="post">
       @csrf
     <div class="mb-3">
@@ -13,10 +16,6 @@
             <div class="alert alert-danger">{{ $message }}</div>
         @enderror
 
-    </div>
-    <div class="mb-3">
-        <label for="practice" class="form-label">練習内容 <span class="badge bg-secondary">任意</span></label>
-        <input type="text" class="form-control" id="practice" name="practice" placeholder="キャッチボール、ノック、シートバッティング...">
     </div>
     <div class="mb-3">
         <label for="swing" class="form-label">素振り回数 <span class="badge bg-danger">必須</label>
@@ -31,6 +30,10 @@
         @error('running')
             <div class="alert alert-danger">{{ $message }}</div>
         @enderror
+    </div>
+    <div class="mb-3">
+        <label for="practice" class="form-label">その他の練習内容 <span class="badge bg-secondary">任意</span></label>
+        <input type="text" class="form-control" id="practice" name="practice" placeholder="キャッチボール、ノック、シートバッティング...">
     </div>
     <div class="mb-3">
         <label for="weight" class="form-label">体重(kg) <span class="badge bg-danger">必須</label>
@@ -65,10 +68,8 @@
             <div class="alert alert-danger">{{ $message }}</div>
         @enderror
     </div>
-        <input type="submit" value="送信する">
-        <input type="reset" value="リセット">
+    <div class="text-center"><input class="btn btn-success" type="submit" value="送信する"></div>
    </form>
   </div>
 </div>
-
 @endsection
