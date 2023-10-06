@@ -8,6 +8,12 @@ use App\Models\Note;
 
 class NoteController extends Controller
 {
+    public function index()
+    {
+        $notes = Note::where('user_id', auth()->id())->latest()->paginate(10);
+        return view('notes_index', compact('notes'));
+    }
+
     public function create()
     {
         return view('note_create');
@@ -38,12 +44,11 @@ class NoteController extends Controller
             'condition.required' => '体重は必須です',
             'memo.required' => '今日の振り返りは必須です',
         ]);
-        
+
         $note = new Note();
         $note->user_id = auth()->id();
         $note->fill($request->all())->save();
 
-        return redirect()->route('home')->with('success', 'ノートが作成されました！');
+        return redirect()->route('notes_index')->with('success', 'ノートが作成されました！');
     }
-
 }
