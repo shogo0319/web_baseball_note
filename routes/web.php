@@ -22,3 +22,4 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/note_create', [App\Http\Controllers\NoteController::class, 'create'])->name('note_create');
 Route::post('/note_store', [App\Http\Controllers\NoteController::class, 'store'])->name('note_store');
+Route::get('/notes', [App\Http\Controllers\NoteController::class, 'index'])->name('notes_index');
