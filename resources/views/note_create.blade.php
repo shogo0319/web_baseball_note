@@ -36,6 +36,11 @@
         <input type="text" class="form-control" id="practice" name="practice" placeholder="キャッチボール、ノック、シートバッティング...">
     </div>
     <div class="mb-3">
+        <label for="youtube_link" class="form-label">YouTubeリンク <span class="badge bg-secondary">任意</span></label>
+        <input type="url" class="form-control" id="youtube_link" name="youtube_link" placeholder="https://www.xxx.baseball_note.jp">
+    </div>
+
+    <div class="mb-3">
         <label for="weight" class="form-label">体重(kg) <span class="badge bg-danger">必須</label>
         <input type="number" class="form-control @error('weight') is-invalid @enderror" id="weight" name="weight" placeholder="70.5" step="0.1" required>
         @error('weight')

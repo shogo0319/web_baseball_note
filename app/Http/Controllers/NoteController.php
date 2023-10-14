@@ -32,6 +32,7 @@ class NoteController extends Controller
             'opponent' => 'nullable',
             'score' => 'nullable',
             'memo' => 'required',
+            'youtube_link' => 'nullable|url',
         ],
         [
             'title.required' => 'タイトルは必須です',
@@ -43,6 +44,7 @@ class NoteController extends Controller
             'weight.numeric' => '数字を入力してください',
             'condition.required' => '体重は必須です',
             'memo.required' => '今日の振り返りは必須です',
+            'youtube_link.url' => '有効なURLを入力してください',
         ]);
 
         $note = new Note();
