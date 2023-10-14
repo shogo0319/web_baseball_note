@@ -51,4 +51,19 @@ class NoteController extends Controller
 
         return redirect()->route('notes_index')->with('success', 'ノートが作成されました！');
     }
+
+        public function edit($id)
+    {
+        $note = Note::find($id);
+        return view('note_edit', compact('note'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $note = Note::find($id);
+        $note->fill($request->all())->save();
+
+        return redirect()->route('notes_index')->with('success', 'ノートが更新されました！');
+    }
+
 }
