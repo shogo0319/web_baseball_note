@@ -31,7 +31,7 @@
                 <td>{{ $note->weight }} kg</td>
                 <td>{{ $note->condition }}</td>
                 <td>
-                    <a href="#" class="btn btn-warning">編集</a>
+                    <a href="{{ route('note_edit', $note->id) }}" class="btn btn-warning">編集</a>
                     <form action="#" method="POST" style="display:inline;">
                         @csrf
                         @method('DELETE')
