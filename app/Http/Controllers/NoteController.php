@@ -64,7 +64,7 @@ class NoteController extends Controller
     {
         $note = Note::find($id);
         $note->fill($request->all())->save();
-
+        
         return redirect()->route('notes_index')->with('success', 'ノートが更新されました！');
     }
 
