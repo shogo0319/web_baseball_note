@@ -56,15 +56,15 @@ class NoteController extends Controller
 
         public function edit($id)
     {
-        $note = Note::find($id);
+        $note = Note::findOrFail($id);
         return view('note_edit', compact('note'));
     }
 
     public function update(Request $request, $id)
     {
-        $note = Note::find($id);
+        $note = Note::findOrFail($id);
         $note->fill($request->all())->save();
-        
+
         return redirect()->route('notes_index')->with('success', 'ノートが更新されました！');
     }
 
