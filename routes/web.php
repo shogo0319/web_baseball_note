@@ -18,10 +18,11 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/notes', [App\Http\Controllers\NoteController::class, 'index'])->name('notes_index');
-Route::get('/note_create', [App\Http\Controllers\NoteController::class, 'create'])->name('note_create');
-Route::post('/note_store', [App\Http\Controllers\NoteController::class, 'store'])->name('note_store');
-Route::get('/note_edit/{id}', [App\Http\Controllers\NoteController::class, 'edit'])->name('note_edit');
-Route::post('/note_update/{id}', [App\Http\Controllers\NoteController::class, 'update'])->name('note_update');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/notes', [App\Http\Controllers\NoteController::class, 'index'])->name('notes_index');
+    Route::get('/note_create', [App\Http\Controllers\NoteController::class, 'create'])->name('note_create');
+    Route::post('/note_store', [App\Http\Controllers\NoteController::class, 'store'])->name('note_store');
+    Route::get('/note_edit/{id}', [App\Http\Controllers\NoteController::class, 'edit'])->name('note_edit');
+    Route::post('/note_update/{id}', [App\Http\Controllers\NoteController::class, 'update'])->name('note_update');
+});
