@@ -38,11 +38,13 @@
                 <td>{{ $note->condition }}</td>
                 <td>
                     <a href="{{ route('note_edit', $note->id) }}" class="btn btn-warning">編集</a>
-                    <form action="#" method="POST" style="display:inline;">
+                    <form action="{{ route('note_delete', $note->id) }}" method="POST" style="display:inline;">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-danger">削除</button>
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('本当に削除してもよろしいですか？');">削除</button>
                     </form>
+
+
                 </td>
             </tr>
             @endforeach

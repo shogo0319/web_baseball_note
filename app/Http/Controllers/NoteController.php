@@ -68,4 +68,14 @@ class NoteController extends Controller
         return redirect()->route('notes_index')->with('success', 'ノートが更新されました！');
     }
 
+    public function destroy($id)
+    {
+        $note = Note::findOrFail($id);
+        if ($note->user_id !== auth()->id()) {
+            return redirect()->route('notes_index')->with('error', 'アクセス権限がありません！');
+        }
+        $note->delete();
+
+        return redirect()->route('notes_index')->with('success', 'ノートが削除されました！');
+    }
 }
