@@ -78,4 +78,11 @@ class NoteController extends Controller
 
         return redirect()->route('notes_index')->with('success', 'ノートが削除されました！');
     }
+
+    public function detail($id)
+{
+    $note = Note::findOrFail($id);
+    return view('note_show', compact('note'));
+}
+
 }
