@@ -31,7 +31,7 @@
             @foreach($notes as $note)
             <tr>
                 <td>{{ $note->created_at->format('Y-m-d') }}</td>
-                <td><a href="{{ route('note_show', $note->id) }}">{{ $note->title }}</a></td>
+                <td><a href="{{ route('note_detail', $note->id) }}">{{ $note->title }}</a></td>
                 <td>{{ $note->swing }} 回</td>
                 <td>{{ $note->running }} km</td>
                 <td>{{ $note->weight }} kg</td>
