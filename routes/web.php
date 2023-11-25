@@ -30,6 +30,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/note_update/{id}', [NoteController::class, 'update'])->name('note_update');
     Route::delete('/note_delete/{id}', [NoteController::class, 'destroy'])->name('note_delete');
     Route::get('/note_detail/{id}', [NoteController::class, 'detail'])->name('note_detail');
+
+    Route::get('/grades', [GradeController::class, 'index'])->name('grades_index');
     Route::get('/grade/create', [GradeController::class, 'create'])->name('grade_create');
     Route::post('/grade_store', [GradeController::class, 'store'])->name('grade_store');
     });
