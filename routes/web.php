@@ -32,6 +32,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/note_detail/{id}', [NoteController::class, 'detail'])->name('note_detail');
 
     Route::get('/grades', [GradeController::class, 'index'])->name('grades_index');
-    Route::get('/grade/create', [GradeController::class, 'create'])->name('grade_create');
+    Route::get('/grade_create', [GradeController::class, 'create'])->name('grade_create');
     Route::post('/grade_store', [GradeController::class, 'store'])->name('grade_store');
+    Route::get('/grade_detail', [GradeController::class, 'detail'])->name('grade_detail');
     });

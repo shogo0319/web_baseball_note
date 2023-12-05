@@ -16,15 +16,15 @@ class GradeController extends Controller
     public function create()
     {
         $positions = [
-            '1' => 'ピッチャー',
-            '2' => 'キャッチャー',
-            '3' => 'ファースト',
-            '4' => 'セカンド',
-            '5' => 'サード',
-            '6' => 'ショート',
-            '7' => 'レフト',
-            '8' => 'センター',
-            '9' => 'ライト',
+            '1' => '投',
+            '2' => '捕',
+            '3' => '一',
+            '4' => '二',
+            '5' => '三',
+            '6' => '遊',
+            '7' => '左',
+            '8' => '中',
+            '9' => '右',
             '10' => 'その他',
         ];
 
@@ -58,4 +58,10 @@ class GradeController extends Controller
         dd($posts);
         return view('grade_create');
     }
+
+    public function detail()
+{
+    return view('grade_detail');
+}
+
 }

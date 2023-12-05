@@ -3,8 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Position;
-use App\Models\Result;
+use Illuminate\Support\Facades\DB;
 
 class GradeSeeder extends Seeder
 {
@@ -15,6 +14,8 @@ class GradeSeeder extends Seeder
      */
     public function run()
     {
-        //
+        DB::table('results')->insert([
+            
+        ])
     }
 }

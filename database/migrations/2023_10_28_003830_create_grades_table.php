@@ -15,11 +15,17 @@ class CreateGradesTable extends Migration
     {
         Schema::create('grades', function (Blueprint $table) {
             $table->id();
-            $table->string('grades');
-            $table->integer('stolen_bases')->default(0);
-            $table->integer('walks')->default(0);
-            $table->integer('rbi')->default(0);
-            $table->timestamps();
+            $table->foreignId('user_id')->nullable()->constrained();
+            $table->integer('first_at_bat')->nullable();
+            $table->integer('second_at_bat')->nullable();
+            $table->integer('third_at_bat')->nullable();
+            $table->integer('fourth_at_bat')->nullable();
+            $table->integer('fifth_at_bat')->nullable();
+            $table->integer('sixth_at_bat')->nullable();
+            $table->integer('seventh_at_bat')->nullable();
+            $table->softDeletes();
+            $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));
+            $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
         });
 
     }
