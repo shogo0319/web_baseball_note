@@ -15,10 +15,10 @@ class CreateGamesTable extends Migration
     {
         Schema::create('games', function (Blueprint $table) {
             $table->id();
-            $table->timestamp('game_at');
-            $table->string('place');
-            $table->string('opponent');
-            $table->integer('score');
+            $table->timestamp('game_at')->nullable();
+            $table->string('place')->nullable();
+            $table->string('opponent')->nullable();
+            $table->integer('score')->nullable();
             $table->softDeletes();
             $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));
             $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
