@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Grade;
 use App\Models\Game;
+use Carbon\Carbon; // Carbon クラスをインポート
 
 class GradeController extends Controller
 {
@@ -132,9 +133,51 @@ class GradeController extends Controller
         return redirect( route('grades_index') )->with('success', '成績が作成されました！');
     }
 
-        public function detail()
+    public function show($id)
     {
-        return view('grade_detail');
+        $grade = Grade::where('game_id', $id)->first();
+
+        // 成績計算
+        $dailyPerformance = $this->calculatePerformance($grade);
+
+        return view('grade_show', compact('grade', 'dailyPerformance'));
     }
 
+    // その試合の成績を計算するメソッド
+    private function calculatePerformance($grade)
+    {
+        $totalHits = 0;
+        $totalAtBats = 0;
+        $totalRBIs = 0; // 打点の合計
+        $totalForHitBalls = 0; // 四死球の合計
+        $totalSacrificeFlies = 0; // 犠牲フライの合計
+
+        $hitsAndAtBats = $grade->getHitsAndAtBats();
+        $totalHits = $hitsAndAtBats['hits'];
+        $totalAtBats = $hitsAndAtBats['atBats'];
+
+        // 打点、四死球、犠牲フライの値を加算
+        $totalRBIs += $grade->rbi;
+        $ForHitBallsANDSacrificeFlies = $grade->getForHitBallsANDSacrificeFlies();
+        $totalForHitBalls += $ForHitBallsANDSacrificeFlies['ForHitBalls'];
+        $totalSacrificeFlies += $ForHitBallsANDSacrificeFlies['sacrificeFlies'];
+
+        $average = $totalAtBats > 0 ? $totalHits / $totalAtBats : 0;
+
+        $onBasePercentage = $totalAtBats + $totalForHitBalls + $totalSacrificeFlies > 0 ?
+        ($totalHits + $totalForHitBalls) / ($totalAtBats + $totalForHitBalls + $totalSacrificeFlies) :
+        0;// 出塁率を計算。分母（打数+四死球数+犠牲フライ数）が0より大きい場合に計算し、そうでなければ0
+
+        // 必要に応じて他の成績も追加
+        return [
+            'totalHits' => $totalHits,
+            'totalAtBats' => $totalAtBats,
+            'average' => $average,
+            'onBasePercentage' => $onBasePercentage,
+            'totalRBIs' => $totalRBIs,
+            'totalForHitBalls' => $totalForHitBalls,
+            'totalSacrificeFlies' => $totalSacrificeFlies,
+            // その他の成績
+        ];
+    }
 }
