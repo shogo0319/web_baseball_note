@@ -45,15 +45,18 @@
                         <th scope="col">場所</th>
                         <th scope="col">対戦相手</th>
                         <th scope="col">スコア</th>
+                        <th></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($grades as $grade)
                     <tr>
-                        <td><a href="/grade_detail">{{ $grade->game->game_at->format('Y/m/d') }}</a></td>
+                        <td>{{ $grade->game->game_at->format('Y/m/d') }}</td>
                         <td>{{ $grade->game->place }}</td>
                         <td>{{ $grade->game->opponent }}</td>
                         <td>{{ $grade->game->score }}</td>
+                        <td><th><a href="{{route('grade_show',$grade)}}">詳細</a></th></td>
                     </tr>
                     @endforeach
                 </tbody>

@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Result; // Result モデルをインポート
+use App\Models\Result;
 
 
 class Grade extends Model
@@ -31,8 +31,8 @@ class Grade extends Model
         return $this->belongsTo(Game::class);
     }
 
-
-    public function getHitsAndAtBats()// 通算の安打数と打数を取得する関数
+    // 安打数と打数を取得する関数
+    public function getHitsAndAtBats()
     {
         $hits = 0; // 安打数を数える変数
         $atBats = 0; // 打席数を数える変数
@@ -43,7 +43,6 @@ class Grade extends Model
 
         foreach ($atBatNames as $atBatName) { // それぞれの打席についてのループ処理
             $atBatResultName = $this->{$atBatName}; // 現在の打席の結果を取得
-
             if ($atBatResultName) { //打席の結果が存在する場合
                 $result = Result::where('name', $atBatResultName)->first(); // Result テーブルから対応する type を取得
                 if ($result) { //上記の結果が存在する場合
