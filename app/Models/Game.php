@@ -10,13 +10,13 @@ class Game extends Model
     use HasFactory;
 
     protected $table = 'games';
-    protected $dates = ['game_at'];
 
+    protected $dates = ['game_at'];
 
     protected $fillable = [
         'game_at', 'place', 'opponent', 'score'
     ];
-
+    
     public function grades()
     {
         return $this->hasMany(Grade::class);
