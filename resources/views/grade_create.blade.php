@@ -54,14 +54,14 @@
                         <label for="grade" class="form-label"><strong>{{ $i }}打席目:</strong><span class="badge bg-secondary">任意</span></label><br>
                         <select name="position_{{ $i }}" id="position_{{ $i }}" style="width: 50%;" class="mb-3">
                             <option value="" disabled {{ old('position_' . $i) == null ? 'selected' : '' }}>打球方向を選択してください</option>
-                            @foreach ($positions as $key => $position)
-                                <option value="{{ $position }}" {{ old('position_' . $i) == $position ? 'selected' : '' }}>{{ $position }}</option>
+                            @foreach ($positions as $position)
+                                <option value="{{ $position->name }}" {{ old('position_' . $i) == $position->name ? 'selected' : '' }}>{{ $position->name }}</option>
                             @endforeach
                         </select>
                         <select name="result_{{ $i }}" id="result_{{ $i }}" style="width: 49%;">
                             <option value="" disabled {{ old('result_' . $i) == null ? 'selected' : '' }}>打撃結果を選択してください</option>
-                            @foreach($results as $key => $result)
-                                <option value="{{ $result }}" {{ old('result_' . $i) == $result ? 'selected' : '' }}>{{ $result }}</option>
+                            @foreach($results as $result)
+                                <option value="{{ $result->name }}" {{ old('result_' . $i) == $result->name ? 'selected' : '' }}>{{ $result->name }}</option>
                             @endforeach
                         </select>
                     @endfor

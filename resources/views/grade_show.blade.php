@@ -2,6 +2,11 @@
 
 @section('content')
 <div class="container">
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card border-warning text-center mb-5 mt-5">
@@ -47,8 +52,12 @@
                 </div>
             </div>
             <div class="mt-4" style="display: flex; justify-content: center;">
-                <a href="#" class="btn btn-warning">編集</a>
-                <a href="#" class="btn btn-secondary">戻る</a>
+                <a href="{{ route('grade_edit', [$grade->id]) }}" class="btn btn-warning">編集</a>
+                <form action="{{ route('grade_delete', $grade->game_id) }}" method="POST" style="display:inline;">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger" onclick="return confirm('本当に削除してもよろしいですか？');">削除</button>
+                </form>
             </div>
 
         </div>

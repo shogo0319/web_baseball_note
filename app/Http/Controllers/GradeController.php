@@ -5,41 +5,39 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Grade;
 use App\Models\Game;
-use Carbon\Carbon; // Carbon クラスをインポート
+use App\Models\Position;
+
 
 class GradeController extends Controller
 {
     public function index()
     {
-        $userId = auth()->id(); // ログインしているユーザーのIDを取得して変数$userIdに格納
-        $grades = Grade::where('user_id', $userId)->get(); // Gradeモデルを使用して、ログインユーザーのIDに一致する成績データを取得
+        $userId = auth()->id();
+        $grades = Grade::where('user_id', $userId)->get();
 
-        $totalGames = $grades->count(); // 通算試合数 (gradesテーブルのレコード数)を計算
-        $totalRBIs = $grades->sum('rbi'); // 通算打点　（gradesテーブルのrbiカラムの合計)
+        $totalGames = $grades->count();
+        $totalRBIs = $grades->sum('rbi');
 
-        $totalHits = 0; // ヒット数の合計を保持するための変数$totalHitsを0で初期化
-        $totalAtBats = 0; // 打数の合計を保持するための変数$totalAtBatsを0で初期化
+        $totalHits = 0;
+        $totalAtBats = 0;
 
-        $totalForHitBalls = 0; // 四死球の合計数を保持するための変数$totalForHitBallsを0で初期化
-        $totalSacrificeFlies = 0; // 犠牲フライの合計数を保持するための変数$totalSacrificeFliesを0で初期化
+        $totalForHitBalls = 0;
+        $totalSacrificeFlies = 0;
 
-        foreach ($grades as $grade) { // 取得した成績データ$gradesをループ処理
-            $result = $grade->getHitsAndAtBats(); // 各成績からヒット数と打数を取得
-            $totalHits += $result['hits']; // ヒット数を$totalHitsに加算
-            $totalAtBats += $result['atBats']; // 打数を$totalAtBatsに加算
-
-            $ForHitBallsANDSacrificeFlies = $grade->getForHitBallsANDSacrificeFlies(); // 四死球と犠牲フライの数を取得
-            $totalForHitBalls += $ForHitBallsANDSacrificeFlies['ForHitBalls']; //四死球数を$totalForHitBallsに加算
-            $totalSacrificeFlies += $ForHitBallsANDSacrificeFlies['sacrificeFlies']; //犠牲フライ数を$totalSacrificeFliesに加算
+        foreach ($grades as $grade)
+        {
+            $result = $grade->getHitsAndAtBats();
+            $totalHits += $result['hits'];
+            $totalAtBats += $result['atBats'];
+            $ForHitBallsANDSacrificeFlies = $grade->getForHitBallsANDSacrificeFlies();
+            $totalForHitBalls += $ForHitBallsANDSacrificeFlies['ForHitBalls'];
+            $totalSacrificeFlies += $ForHitBallsANDSacrificeFlies['sacrificeFlies'];
         }
-
+        // 条件 ? 真の場合の値 : 偽の場合の値;
         $average = $totalAtBats > 0 ? $totalHits / $totalAtBats : 0;
-        // 打数が0より大きい場合の平均を計算、そうでなければ0
 
         $onBasePercentage = $totalAtBats + $totalForHitBalls + $totalSacrificeFlies > 0 ?
-        ($totalHits + $totalForHitBalls) / ($totalAtBats + $totalForHitBalls + $totalSacrificeFlies) :
-        0;// 出塁率を計算。分母（打数+四死球数+犠牲フライ数）が0より大きい場合に計算し、そうでなければ0
-
+        ($totalHits + $totalForHitBalls) / ($totalAtBats + $totalForHitBalls + $totalSacrificeFlies) :0;
 
         return view('grades_index', compact('grades', 'average', 'totalHits', 'totalAtBats', 'totalGames', 'totalRBIs', 'onBasePercentage'));
     }
@@ -47,40 +45,11 @@ class GradeController extends Controller
 
     public function create()
     {
-        $positions = [
-            '1' => '投',
-            '2' => '捕',
-            '3' => '一',
-            '4' => '二',
-            '5' => '三',
-            '6' => '遊',
-            '7' => '左',
-            '8' => '中',
-            '9' => '右',
-            '10' => 'その他',
-        ];
+        $positions = \DB::table('positions')->get();
 
-        $results = [
-            'a' => 'ゴロ',
-            'b' => '飛',
-            'c' => '直',
-            'd' => '邪飛',
-            'e' => '併殺打',
-            'f' => '犠打',
-            'g' => '安打',
-            'h' => '二塁打',
-            'i' => '三塁打',
-            'j' => '本塁打',
-            'k' => '敵失',
-            'l' => '犠飛',
-            'm' => '空三振',
-            'n' => '見三振',
-            'o' => '死球',
-            'p' => '四球',
-        ];
+        $results = \DB::table('result_kinds')->get();
 
         $numberOfAtBats = 7;
-
         return view('grade_create', compact('positions', 'results', 'numberOfAtBats'));
     }
 
@@ -120,13 +89,13 @@ class GradeController extends Controller
         $grade = new Grade();
         $grade->user_id = $userId;
         $grade->game_id = $game->id;
-        $grade->first_at_bat = $request->position_1 . $request->result_1;
-        $grade->second_at_bat = $request->position_2 . $request->result_2;
-        $grade->third_at_bat = $request->position_3 . $request->result_3;
-        $grade->fourth_at_bat = $request->position_4 . $request->result_4;
-        $grade->fifth_at_bat = $request->position_5 . $request->result_5;
-        $grade->sixth_at_bat = $request->position_6 . $request->result_6;
-        $grade->seventh_at_bat = $request->position_7 . $request->result_7;
+        $grade->first_at_bat = $request->position_1 . ' ' . $request->result_1;
+        $grade->second_at_bat = $request->position_2 . ' ' . $request->result_2;
+        $grade->third_at_bat = $request->position_3 . ' ' . $request->result_3;
+        $grade->fourth_at_bat = $request->position_4 . ' ' . $request->result_4;
+        $grade->fifth_at_bat = $request->position_5 . ' ' . $request->result_5;
+        $grade->sixth_at_bat = $request->position_6 . ' ' . $request->result_6;
+        $grade->seventh_at_bat = $request->position_7 . ' ' . $request->result_7;
         $grade->rbi = $request->rbi;
         $grade->save();
 
@@ -137,26 +106,23 @@ class GradeController extends Controller
     {
         $grade = Grade::where('game_id', $id)->first();
 
-        // 成績計算
         $dailyPerformance = $this->calculatePerformance($grade);
 
         return view('grade_show', compact('grade', 'dailyPerformance'));
     }
 
-    // その試合の成績を計算するメソッド
     private function calculatePerformance($grade)
     {
         $totalHits = 0;
         $totalAtBats = 0;
-        $totalRBIs = 0; // 打点の合計
-        $totalForHitBalls = 0; // 四死球の合計
-        $totalSacrificeFlies = 0; // 犠牲フライの合計
+        $totalRBIs = 0;
+        $totalForHitBalls = 0;
+        $totalSacrificeFlies = 0;
 
         $hitsAndAtBats = $grade->getHitsAndAtBats();
         $totalHits = $hitsAndAtBats['hits'];
         $totalAtBats = $hitsAndAtBats['atBats'];
 
-        // 打点、四死球、犠牲フライの値を加算
         $totalRBIs += $grade->rbi;
         $ForHitBallsANDSacrificeFlies = $grade->getForHitBallsANDSacrificeFlies();
         $totalForHitBalls += $ForHitBallsANDSacrificeFlies['ForHitBalls'];
@@ -166,9 +132,8 @@ class GradeController extends Controller
 
         $onBasePercentage = $totalAtBats + $totalForHitBalls + $totalSacrificeFlies > 0 ?
         ($totalHits + $totalForHitBalls) / ($totalAtBats + $totalForHitBalls + $totalSacrificeFlies) :
-        0;// 出塁率を計算。分母（打数+四死球数+犠牲フライ数）が0より大きい場合に計算し、そうでなければ0
+        0;
 
-        // 必要に応じて他の成績も追加
         return [
             'totalHits' => $totalHits,
             'totalAtBats' => $totalAtBats,
@@ -177,7 +142,75 @@ class GradeController extends Controller
             'totalRBIs' => $totalRBIs,
             'totalForHitBalls' => $totalForHitBalls,
             'totalSacrificeFlies' => $totalSacrificeFlies,
-            // その他の成績
         ];
     }
+
+    public function edit($id)
+    {
+        $grade = Grade::where('game_id', $id)->first();
+
+        $positions = \DB::table('positions')->get();
+        $resultKinds = \DB::table('result_kinds')->get();
+        $numberOfAtBats = 7;
+
+        // カラム名に合わせて各打席のデータを分割し、配列に保存
+        $atBats = [];
+        for ($i = 1; $i <= $numberOfAtBats; $i++) {
+            $atBatKey = match($i) {
+                1 => 'first_at_bat',
+                2 => 'second_at_bat',
+                3 => 'third_at_bat',
+                4 => 'fourth_at_bat',
+                5 => 'fifth_at_bat',
+                6 => 'sixth_at_bat',
+                7 => 'seventh_at_bat',
+                default => null
+            };
+
+            if ($atBatKey !== null) {
+                $atBatParts = explode(' ', $grade->$atBatKey ?? '');
+                $atBats[$i]['position'] = $atBatParts[0] ?? null;
+                $atBats[$i]['result'] = $atBatParts[1] ?? null;
+            }
+        }
+
+        return view('grade_edit', compact('grade', 'positions', 'resultKinds', 'numberOfAtBats', 'atBats'));
+    }
+
+
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'date' => 'required|date',
+            'place' => 'required',
+            'opponent' => 'required',
+            'OwnScore' => 'required|integer|min:0',
+            'OtherScore' => 'required|integer|min:0',
+            'rbi' => 'integer|min:0',
+        ]);
+        $grade = Grade::where('game_id', $id)->first();
+        $grade->update([
+            'first_at_bat' => $request->position_1 . ' ' . $request->result_1,
+            'second_at_bat' => $request->position_2 . ' ' . $request->result_2,
+            'third_at_bat' => $request->position_3 . ' ' .$request->result_3,
+            'fourth_at_bat' => $request->position_4 . ' ' . $request->result_4,
+            'fifth_at_bat' => $request->position_5 . ' ' . $request->result_5,
+            'sixth_at_bat' => $request->position_6 . ' ' . $request->result_6,
+            'seventh_at_bat' => $request->position_7 . ' ' . $request->result_7,
+            'rbi' => $request->rbi,
+        ]);
+
+        return redirect()->route('grade_show', $id)->with('success', '成績が更新されました！');
+    }
+
+    public function destroy($id)
+    {
+        $grade = Grade::where('game_id', $id)->first();
+        $grade->delete();
+
+        return redirect('/grades')->with('success', '成績が削除されました！');
+    }
+
+
 }

@@ -23,6 +23,7 @@ Route::get('/', function () {
 Auth::routes();
 Route::middleware(['auth'])->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
+
     Route::get('/notes', [NoteController::class, 'index'])->name('notes_index');
     Route::get('/note_create', [NoteController::class, 'create'])->name('note_create');
     Route::post('/note_store', [NoteController::class, 'store'])->name('note_store');
@@ -34,5 +35,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/grades', [GradeController::class, 'index'])->name('grades_index');
     Route::get('/grade_create', [GradeController::class, 'create'])->name('grade_create');
     Route::post('/grade_store', [GradeController::class, 'store'])->name('grade_store');
+    Route::get('/grade_edit/{id}', [GradeController::class, 'edit'])->name('grade_edit');
+    Route::post('/grade_update/{id}', [GradeController::class, 'update'])->name('grade_update');
+    Route::delete('/grade_delete/{id}', [GradeController::class, 'destroy'])->name('grade_delete');
     Route::get('/grade_show/{id}', [GradeController::class, 'show'])->name('grade_show');
     });
