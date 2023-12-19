@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NoteController;
 use App\Http\Controllers\GradeController;
+use App\Http\Controllers\RankingController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -39,4 +41,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/grade_update/{id}', [GradeController::class, 'update'])->name('grade_update');
     Route::delete('/grade_delete/{id}', [GradeController::class, 'destroy'])->name('grade_delete');
     Route::get('/grade_show/{id}', [GradeController::class, 'show'])->name('grade_show');
+
+    Route::get('/batting_average', [RankingController::class, 'batting_average'])->name('batting_average');
+
     });
