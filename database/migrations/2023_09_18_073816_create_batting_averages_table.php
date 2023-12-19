@@ -16,7 +16,7 @@ class CreateBattingAveragesTable extends Migration
         Schema::create('batting_averages', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained();
-            $table->decimal('average', 8, 2);
+            $table->decimal('average', 8, 3);
             $table->softDeletes();
             $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));
             $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));

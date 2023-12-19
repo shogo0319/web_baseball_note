@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BattingAverage;
 use Illuminate\Http\Request;
 use App\Models\Grade;
 use App\Models\Game;
@@ -98,6 +99,27 @@ class GradeController extends Controller
         $grade->seventh_at_bat = $request->position_7 . ' ' . $request->result_7;
         $grade->rbi = $request->rbi;
         $grade->save();
+
+        $grades = Grade::where('user_id', $userId)->get();
+        $totalHits = 0;
+        $totalAtBats = 0;
+        $totalForHitBalls = 0;
+        $totalSacrificeFlies = 0;
+        foreach ($grades as $grade)
+        {
+            $result = $grade->getHitsAndAtBats();
+            $totalHits += $result['hits'];
+            $totalAtBats += $result['atBats'];
+            $ForHitBallsANDSacrificeFlies = $grade->getForHitBallsANDSacrificeFlies();
+            $totalForHitBalls += $ForHitBallsANDSacrificeFlies['ForHitBalls'];
+            $totalSacrificeFlies += $ForHitBallsANDSacrificeFlies['sacrificeFlies'];
+        }
+        // 条件 ? 真の場合の値 : 偽の場合の値;
+        $average = $totalAtBats > 0 ? round($totalHits / $totalAtBats, 3) : 0;
+        BattingAverage::updateOrCreate(
+            ['user_id' => $userId], // 検索条件
+            ['average' => $average] // 更新または作成する値
+        );
 
         return redirect( route('grades_index') )->with('success', '成績が作成されました！');
     }
@@ -200,6 +222,28 @@ class GradeController extends Controller
             'seventh_at_bat' => $request->position_7 . ' ' . $request->result_7,
             'rbi' => $request->rbi,
         ]);
+
+        $userId = auth()->id();
+        $grades = Grade::where('user_id', $userId)->get();
+        $totalHits = 0;
+        $totalAtBats = 0;
+        $totalForHitBalls = 0;
+        $totalSacrificeFlies = 0;
+        foreach ($grades as $grade)
+        {
+            $result = $grade->getHitsAndAtBats();
+            $totalHits += $result['hits'];
+            $totalAtBats += $result['atBats'];
+            $ForHitBallsANDSacrificeFlies = $grade->getForHitBallsANDSacrificeFlies();
+            $totalForHitBalls += $ForHitBallsANDSacrificeFlies['ForHitBalls'];
+            $totalSacrificeFlies += $ForHitBallsANDSacrificeFlies['sacrificeFlies'];
+        }
+
+        $average = $totalAtBats > 0 ? round($totalHits / $totalAtBats, 3) : 0;
+        BattingAverage::updateOrCreate(
+            ['user_id' => $userId], // 検索条件
+            ['average' => $average] // 更新または作成する値
+        );
 
         return redirect()->route('grade_show', $id)->with('success', '成績が更新されました！');
     }
