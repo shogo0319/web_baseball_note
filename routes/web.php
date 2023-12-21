@@ -43,5 +43,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/grade_show/{id}', [GradeController::class, 'show'])->name('grade_show');
 
     Route::get('/batting_average', [RankingController::class, 'batting_average'])->name('batting_average');
+    Route::get('/on_base_percentage', [RankingController::class, 'on_base_percentage'])->name('on_base_percentage');
 
     });
