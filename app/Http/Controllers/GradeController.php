@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\BattingAverage;
+use App\Models\BattingPoint;
 use Illuminate\Http\Request;
 use App\Models\Grade;
 use App\Models\Game;
@@ -127,6 +128,12 @@ class GradeController extends Controller
         OnBasePercentage::updateOrCreate(
             ['user_id' => $userId], // 検索条件
             ['obp' => $onBasePercentage] // 更新または作成する値
+        );
+
+        $totalRBIs = $grades->sum('rbi');
+        BattingPoint::updateOrCreate(
+            ['user_id' => $userId], // 検索条件
+            ['point' => $totalRBIs] // 更新または作成する値
         );
 
         return redirect( route('grades_index') )->with('success', '成績が作成されました！');
@@ -258,6 +265,12 @@ class GradeController extends Controller
         OnBasePercentage::updateOrCreate(
             ['user_id' => $userId], // 検索条件
             ['obp' => $onBasePercentage] // 更新または作成する値
+        );
+
+        $totalRBIs = $grades->sum('rbi');
+        BattingPoint::updateOrCreate(
+            ['user_id' => $userId], // 検索条件
+            ['point' => $totalRBIs] // 更新または作成する値
         );
 
         return redirect()->route('grade_show', $id)->with('success', '成績が更新されました！');

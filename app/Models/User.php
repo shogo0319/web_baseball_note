@@ -50,4 +50,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(OnBasePercentage::class);
     }
+
+    public function batting_points()
+    {
+        return $this->hasMany(BattingPoint::class);
+    }
 }
