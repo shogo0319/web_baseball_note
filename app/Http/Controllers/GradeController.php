@@ -6,6 +6,7 @@ use App\Models\BattingAverage;
 use Illuminate\Http\Request;
 use App\Models\Grade;
 use App\Models\Game;
+use App\Models\OnBasePercentage;
 use App\Models\Position;
 
 
@@ -119,6 +120,13 @@ class GradeController extends Controller
         BattingAverage::updateOrCreate(
             ['user_id' => $userId], // 検索条件
             ['average' => $average] // 更新または作成する値
+        );
+
+        $onBasePercentage = $totalAtBats + $totalForHitBalls + $totalSacrificeFlies > 0 ?
+        ($totalHits + $totalForHitBalls) / ($totalAtBats + $totalForHitBalls + $totalSacrificeFlies) :0;
+        OnBasePercentage::updateOrCreate(
+            ['user_id' => $userId], // 検索条件
+            ['obp' => $onBasePercentage] // 更新または作成する値
         );
 
         return redirect( route('grades_index') )->with('success', '成績が作成されました！');
@@ -243,6 +251,13 @@ class GradeController extends Controller
         BattingAverage::updateOrCreate(
             ['user_id' => $userId], // 検索条件
             ['average' => $average] // 更新または作成する値
+        );
+
+        $onBasePercentage = $totalAtBats + $totalForHitBalls + $totalSacrificeFlies > 0 ?
+        ($totalHits + $totalForHitBalls) / ($totalAtBats + $totalForHitBalls + $totalSacrificeFlies) :0;
+        OnBasePercentage::updateOrCreate(
+            ['user_id' => $userId], // 検索条件
+            ['obp' => $onBasePercentage] // 更新または作成する値
         );
 
         return redirect()->route('grade_show', $id)->with('success', '成績が更新されました！');
