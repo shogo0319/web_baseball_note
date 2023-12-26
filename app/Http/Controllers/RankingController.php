@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\BattingAverage;
 use App\Models\BattingPoint;
 use App\Models\OnBasePercentage;
+use App\Models\PracticeRunning;
 use Illuminate\Http\Request;
 
 class RankingController extends Controller
@@ -27,5 +28,11 @@ class RankingController extends Controller
     {
         $battingPoints = BattingPoint::with('user')->orderBy('point', 'desc')->get();
         return view('batting_point', compact('battingPoints'));
+    }
+
+    public function practice_running()
+    {
+        $practiceRunnings = PracticeRunning::with('user')->orderBy('distant', 'desc')->get();
+        return view('practice_running', compact('practiceRunnings'));
     }
 }

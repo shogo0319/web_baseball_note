@@ -55,18 +55,6 @@
             @enderror
         </div>
         <div class="mb-3">
-            <label for="place" class="form-label">場所 <span class="badge bg-secondary">任意</span></label>
-            <input type="text" class="form-control" id="place" name="place" value="{{ $note->place }}">
-        </div>
-        <div class="mb-3">
-            <label for="opponent" class="form-label">対戦相手 <span class="badge bg-secondary">任意</label>
-            <input type="text" class="form-control" id="opponent" name="opponent" value="{{ $note->opponent }}">
-        </div>
-        <div class="mb-3">
-            <label for="score" class="form-label">試合結果 <span class="badge bg-secondary">任意</label>
-            <input type="text" class="form-control" id="score" name="score" value="{{ $note->score }}">
-        </div>
-        <div class="mb-3">
             <label for="memo" class="form-label">今日の振り返り（気づきや学び、感想など自由に記述）<span class="badge bg-danger">必須</label>
             <textarea class="form-control @error('memo') is-invalid @enderror" id="memo" name="memo" rows="3" required>{{ $note->memo }}</textarea>
             @error('condition')

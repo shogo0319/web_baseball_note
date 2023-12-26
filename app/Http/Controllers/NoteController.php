@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Note;
-
+use App\Models\PracticeRunning;
 
 class NoteController extends Controller
 {
@@ -47,9 +47,18 @@ class NoteController extends Controller
             'youtube_link.url' => '有効なURLを入力してください',
         ]);
 
+        $userId = auth()->id();
         $note = new Note();
         $note->user_id = auth()->id();
         $note->fill($request->all())->save();
+
+        $totalRunningDistance = Note::where('user_id', $userId)->sum('running');
+        // dd($totalRunningDistance);
+
+        PracticeRunning::updateOrCreate(
+            ['user_id' => $userId], // 検索条件
+            ['distant' => $totalRunningDistance] // 更新または作成する値
+        );
 
         return redirect()->route('notes_index')->with('success', 'ノートが作成されました！');
     }
@@ -64,6 +73,14 @@ class NoteController extends Controller
     {
         $note = Note::findOrFail($id);
         $note->fill($request->all())->save();
+
+        $userId = auth()->id();
+        $totalRunningDistance = Note::where('user_id', $userId)->sum('running');
+        // dd($totalRunningDistance);
+        PracticeRunning::updateOrCreate(
+            ['user_id' => $userId], // 検索条件
+            ['distant' => $totalRunningDistance] // 更新または作成する値
+        );
 
         return redirect()->route('notes_index')->with('success', 'ノートが更新されました！');
     }

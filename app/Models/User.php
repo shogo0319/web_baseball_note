@@ -55,4 +55,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(BattingPoint::class);
     }
+
+    public function practice_runnings()
+    {
+        return $this->hasMany(PracticeRunning::class);
+    }
 }

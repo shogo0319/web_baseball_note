@@ -46,4 +46,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/on_base_percentage', [RankingController::class, 'on_base_percentage'])->name('on_base_percentage');
     Route::get('/batting_point', [RankingController::class, 'batting_point'])->name('batting_point');
 
+    Route::get('/practice_running', [RankingController::class, 'practice_running'])->name('practice_running');
+
     });
