@@ -60,4 +60,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(PracticeRunning::class);
     }
+
+    public function practice_swings()
+    {
+        return $this->hasMany(PracticeSwing::class);
+    }
 }
