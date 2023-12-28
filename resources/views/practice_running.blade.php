@@ -9,6 +9,12 @@
                     <h3 class="text-secondary">ランニングランキング</h3>
                 </div>
             </div>
+            <div class="d-flex justify-content-between mb-5">
+                <a href="{{ route('on_base_percentage') }}" class="btn btn-outline-success">出塁率ランキング</a>
+                <a href="{{ route('batting_point') }}" class="btn btn-outline-success">打点ランキング</a>
+                <a href="{{ route('practice_swing') }}" class="btn btn-outline-success">素振りランキング</a>
+                <a href="{{ route('batting_average') }}" class="btn btn-outline-success">打率ランキング</a>
+            </div>
             <table class="table table-hover">
                 <thead class="table-dark">
                     <tr>
@@ -22,7 +28,7 @@
                     <tr>
                         <td>{{ $loop->iteration }}位</td>
                         <td>{{ $practiceRunning->user->name }}</td>
-                        <td>{{ $practiceRunning->distant }}</td>
+                        <td>{{ $practiceRunning->distant }}km</td>
                     </tr>
                 @endforeach
                 </tbody>
