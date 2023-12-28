@@ -89,7 +89,8 @@
                     @enderror
                 </div>
                 <div class="text-center">
-                    <input type="submit" value="更新" class="btn btn-primary">
+                    <input type="submit" value="更新" class="btn btn-outline-primary">
+                    <a href="{{ route('grades_index') }}" class="btn btn-outline-secondary">一覧に戻る</a>
                 </div>
             </form>
         </div>

@@ -60,7 +60,10 @@
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
         </div>
-        <div class="text-center"><input class="btn btn-success" type="submit" value="送信する"></div>
+        <div class="text-center mt-5 mb-3">
+            <input class="btn btn-outline-success" type="submit" value="作成する">
+            <a href="{{ route('notes_index') }}" class="btn btn-outline-secondary">一覧に戻る</a>
+        </div>
     </form>
     </div>
 </div>

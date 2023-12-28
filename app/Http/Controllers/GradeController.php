@@ -281,6 +281,41 @@ class GradeController extends Controller
         $grade = Grade::where('game_id', $id)->first();
         $grade->delete();
 
+        $userId = auth()->id();
+        $grades = Grade::where('user_id', $userId)->get();
+        $totalHits = 0;
+        $totalAtBats = 0;
+        $totalForHitBalls = 0;
+        $totalSacrificeFlies = 0;
+        foreach ($grades as $grade)
+        {
+            $result = $grade->getHitsAndAtBats();
+            $totalHits += $result['hits'];
+            $totalAtBats += $result['atBats'];
+            $ForHitBallsANDSacrificeFlies = $grade->getForHitBallsANDSacrificeFlies();
+            $totalForHitBalls += $ForHitBallsANDSacrificeFlies['ForHitBalls'];
+            $totalSacrificeFlies += $ForHitBallsANDSacrificeFlies['sacrificeFlies'];
+        }
+
+        $average = $totalAtBats > 0 ? round($totalHits / $totalAtBats, 3) : 0;
+        BattingAverage::updateOrCreate(
+            ['user_id' => $userId], // 検索条件
+            ['average' => $average] // 更新または作成する値
+        );
+
+        $onBasePercentage = $totalAtBats + $totalForHitBalls + $totalSacrificeFlies > 0 ?
+        ($totalHits + $totalForHitBalls) / ($totalAtBats + $totalForHitBalls + $totalSacrificeFlies) :0;
+        OnBasePercentage::updateOrCreate(
+            ['user_id' => $userId], // 検索条件
+            ['obp' => $onBasePercentage] // 更新または作成する値
+        );
+
+        $totalRBIs = $grades->sum('rbi');
+        BattingPoint::updateOrCreate(
+            ['user_id' => $userId], // 検索条件
+            ['point' => $totalRBIs] // 更新または作成する値
+        );
+        
         return redirect('/grades')->with('success', '成績が削除されました！');
     }
 

@@ -61,7 +61,6 @@ class NoteController extends Controller
         );
 
         $totalSwing = Note::where('user_id', $userId)->sum('swing');
-        // dd($totalSwing);
 
         PracticeSwing::updateOrCreate(
             ['user_id' => $userId], // 検索条件
@@ -108,6 +107,19 @@ class NoteController extends Controller
         }
         $note->delete();
 
+        $userId = auth()->id();
+
+        $totalRunningDistance = Note::where('user_id', $userId)->sum('running');
+        PracticeRunning::updateOrCreate(
+            ['user_id' => $userId], // 検索条件
+            ['distant' => $totalRunningDistance] // 更新または作成する値
+        );
+
+        $totalSwing = Note::where('user_id', $userId)->sum('swing');
+        PracticeSwing::updateOrCreate(
+            ['user_id' => $userId], // 検索条件
+            ['swing' => $totalSwing] // 更新または作成する値
+        );
         return redirect()->route('notes_index')->with('success', 'ノートが削除されました！');
     }
 

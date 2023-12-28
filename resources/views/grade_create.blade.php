@@ -52,18 +52,24 @@
                 <div class="mb-3">
                     @for ($i = 1; $i <= $numberOfAtBats; $i++)
                         <label for="grade" class="form-label"><strong>{{ $i }}打席目:</strong><span class="badge bg-secondary">任意</span></label><br>
-                        <select name="position_{{ $i }}" id="position_{{ $i }}" style="width: 50%;" class="mb-3">
-                            <option value="" disabled {{ old('position_' . $i) == null ? 'selected' : '' }}>打球方向を選択してください</option>
-                            @foreach ($positions as $position)
-                                <option value="{{ $position->name }}" {{ old('position_' . $i) == $position->name ? 'selected' : '' }}>{{ $position->name }}</option>
-                            @endforeach
-                        </select>
-                        <select name="result_{{ $i }}" id="result_{{ $i }}" style="width: 49%;">
-                            <option value="" disabled {{ old('result_' . $i) == null ? 'selected' : '' }}>打撃結果を選択してください</option>
-                            @foreach($results as $result)
-                                <option value="{{ $result->name }}" {{ old('result_' . $i) == $result->name ? 'selected' : '' }}>{{ $result->name }}</option>
-                            @endforeach
-                        </select>
+                        <div class="d-flex justify-content-between">
+                            <div class="w-100">
+                                <select class="form-select mb-3" name="position_{{ $i }}" id="position_{{ $i }}">
+                                    <option value="" disabled {{ old('position_' . $i) == null ? 'selected' : '' }}>打球方向を選択してください</option>
+                                    @foreach ($positions as $position)
+                                        <option value="{{ $position->name }}" {{ old('position_' . $i) == $position->name ? 'selected' : '' }}>{{ $position->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="w-100">
+                                <select class="form-select" name="result_{{ $i }}" id="result_{{ $i }}">
+                                    <option value="" disabled {{ old('result_' . $i) == null ? 'selected' : '' }}>打撃結果を選択してください</option>
+                                    @foreach($results as $result)
+                                        <option value="{{ $result->name }}" {{ old('result_' . $i) == $result->name ? 'selected' : '' }}>{{ $result->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
                     @endfor
                 </div>
                 <div class="mb-5">
@@ -74,7 +80,8 @@
                     @enderror
                 </div>
                 <div class="text-center">
-                    <input type="submit" value="送信" class="btn btn-primary">
+                    <input type="submit" value="作成" class="btn btn-outline-success">
+                    <a href="{{ route('grades_index') }}" class="btn btn-outline-secondary">一覧に戻る</a>
                 </div>
             </form>
         </div>

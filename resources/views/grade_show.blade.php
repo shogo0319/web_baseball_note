@@ -2,28 +2,30 @@
 
 @section('content')
 <div class="container">
-    @if(session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
+    @if (session('success'))
+    <div class="text-center">
+        <div class="alert alert-success mt-3">
+        {{ session('success') }}
         </div>
+    </div>
     @endif
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card border-warning text-center mb-5 mt-5">
-                <div class="card-header">
+                <div class="card-header" style="font-size: 20px;">
                     <strong>{{ $grade->game->game_at->format('Y年m月d日') }}の成績</strong>
                 </div>
                 <div class="card-body" style="font-size: 30px;" >
                     <div class="row">
                         <div class="col-md-6">
-                            <p><span class="text-secondary">打率　</span><u>{{ number_format($dailyPerformance['average'], 3) }}</u></p>
-                            <p><span class="text-secondary">出塁率　</span><u>{{ number_format($dailyPerformance['onBasePercentage'], 3) }}</u></p>
-                            <p><span class="text-secondary">打席数　</span><u>{{ $dailyPerformance['totalAtBats'] }}</u></p>
+                            <p><span>打率：</span>{{ number_format($dailyPerformance['average'], 3) }}</p>
+                            <p><span>出塁率：</span>{{ number_format($dailyPerformance['onBasePercentage'], 3) }}</p>
+                            <p><span>打席数：</span>{{ $dailyPerformance['totalAtBats'] }}</p>
                         </div>
                         <div class="col-md-6">
-                            <p><span class="text-secondary">安打数　</span><u>{{ $dailyPerformance['totalHits'] }}</u></p>
-                            <p><span class="text-secondary">打点　</span><u>{{ $dailyPerformance['totalRBIs'] }}</u></p>
-                            <p><span class="text-secondary">四死球　</span><u>{{ $dailyPerformance['totalForHitBalls'] }}</u></p>
+                            <p><span>安打数：</span>{{ $dailyPerformance['totalHits'] }}</p>
+                            <p><span>打点：</span>{{ $dailyPerformance['totalRBIs'] }}</p>
+                            <p><span>四死球：</span>{{ $dailyPerformance['totalForHitBalls'] }}</p>
                         </div>
                     </div>
                 </div>
@@ -35,7 +37,7 @@
             </div>
             <div class="card">
                 <div class="card-header text-center"><strong>詳細情報</strong></div>
-                <div class="card-body text-secondary" style="font-size: 30px; margin-left: 50px;">
+                <div class="card-body" style="font-size: 30px; margin-left: 50px;">
                     <p><strong>試合日：{{ $grade->game->game_at->format('Y年m月d日') }}</strong></p>
                     <p><strong>場所：{{ $grade->game->place }}</strong></p>
                     <p><strong>対戦相手：{{ $grade->game->opponent }}</strong></p>
@@ -51,15 +53,15 @@
                     <p><strong>打点：{{ $grade->rbi }}</strong></p>
                 </div>
             </div>
-            <div class="mt-4" style="display: flex; justify-content: center;">
-                <a href="{{ route('grade_edit', [$grade->id]) }}" class="btn btn-warning">編集</a>
+            <div class="text-center mt-5 mb-5">
+                <a href="{{ route('grade_edit', [$grade->id]) }}" class="btn btn-outline-warning">編集</a>
                 <form action="{{ route('grade_delete', $grade->game_id) }}" method="POST" style="display:inline;">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="btn btn-danger" onclick="return confirm('本当に削除してもよろしいですか？');">削除</button>
+                    <button type="submit" class="btn btn-outline-danger" onclick="return confirm('本当に削除してもよろしいですか？');">削除</button>
                 </form>
+                <a href="{{ route('grades_index') }}" class="btn btn-outline-secondary">一覧に戻る</a>
             </div>
-
         </div>
     </div>
 </div>
