@@ -4,7 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NoteController;
 use App\Http\Controllers\GradeController;
+use App\Http\Controllers\Leader\LeaderLoginController;
 use App\Http\Controllers\RankingController;
+use App\Http\Controllers\Leader\LeaderRegisterController;
 
 
 /*
@@ -49,3 +51,30 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/practice_swing', [RankingController::class, 'practice_swing'])->name('practice_swing');
 
     });
+
+     /*
+|--------------------------------------------------------------------------
+| 指導者用ルーティング
+|--------------------------------------------------------------------------
+*/
+Route::group(['prefix' => 'leader'], function () {
+    // 登録
+    Route::get('register', [LeaderRegisterController::class, 'create'])->name('leader.register');
+
+    Route::post('register', [LeaderRegisterController::class, 'store']);
+
+    // ログイン
+    Route::get('login', [LeaderLoginController::class, 'showLoginPage'])->name('leader.login');
+
+    Route::post('login', [LeaderLoginController::class, 'login']);
+
+    // 以下の中は認証必須のエンドポイントとなる
+    Route::middleware(['auth:leader'])->group(function () {
+        // ダッシュボード
+        Route::get('leader_home', fn() => view('leader.home'))->name('leader.home');
+        Route::get('leader_players', fn() => view('leader.players'))->name('leader.players');
+    });
+
+    // ログアウト
+    Route::post('logout', [LeaderLoginController::class, 'logout'])->name('leader.logout');
+});
