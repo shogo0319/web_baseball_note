@@ -7,7 +7,7 @@ use App\Http\Controllers\GradeController;
 use App\Http\Controllers\Leader\LeaderLoginController;
 use App\Http\Controllers\RankingController;
 use App\Http\Controllers\Leader\LeaderRegisterController;
-
+use App\Http\Controllers\leader\PlayerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,6 +52,7 @@ Route::middleware(['auth'])->group(function () {
 
     });
 
+
      /*
 |--------------------------------------------------------------------------
 | 指導者用ルーティング
@@ -72,7 +73,9 @@ Route::group(['prefix' => 'leader'], function () {
     Route::middleware(['auth:leader'])->group(function () {
         // ダッシュボード
         Route::get('leader_home', fn() => view('leader.home'))->name('leader.home');
-        Route::get('leader_players', fn() => view('leader.players'))->name('leader.players');
+        Route::get('leader_players', [PlayerController::class, 'leader_players'])->name('leader_players');
+        Route::get('players_notes_index/{user}', [PlayerController::class, 'players_notes_index'])->name('players_notes_index');
+        Route::get('players_note_detail/{id}', [PlayerController::class, 'players_note_detail'])->name('players_note_detail');
     });
 
     // ログアウト

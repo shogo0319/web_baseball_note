@@ -65,4 +65,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(PracticeSwing::class);
     }
+
+    public function notes()
+    {
+        return $this->hasMany(Note::class);
+    }
+
 }

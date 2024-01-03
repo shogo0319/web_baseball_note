@@ -12,4 +12,9 @@ class Note extends Model
     protected $fillable = [
         'title', 'practice', 'youtube_link', 'swing', 'running', 'weight', 'condition', 'place', 'opponent', 'score', 'memo'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
