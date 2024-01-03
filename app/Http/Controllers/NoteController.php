@@ -124,9 +124,8 @@ class NoteController extends Controller
     }
 
     public function detail($id)
-{
-    $note = Note::findOrFail($id);
-    return view('note_detail', compact('note'));
-}
-
+    {
+        $note = Note::findOrFail($id);
+        return view('note_detail', compact('note'));
+    }
 }
