@@ -8,6 +8,7 @@ use App\Http\Controllers\Leader\LeaderLoginController;
 use App\Http\Controllers\RankingController;
 use App\Http\Controllers\Leader\LeaderRegisterController;
 use App\Http\Controllers\leader\PlayerController;
+use App\Http\Controllers\leader\PlayerRankingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -76,6 +77,12 @@ Route::group(['prefix' => 'leader'], function () {
         Route::get('leader_players', [PlayerController::class, 'leader_players'])->name('leader_players');
         Route::get('players_notes_index/{user}', [PlayerController::class, 'players_notes_index'])->name('players_notes_index');
         Route::get('players_note_detail/{id}', [PlayerController::class, 'players_note_detail'])->name('players_note_detail');
+
+        Route::get('players_batting_average', [PlayerRankingController::class, 'players_batting_average'])->name('players_batting_average');
+        Route::get('players_on_base_percentage', [PlayerRankingController::class, 'players_on_base_percentage'])->name('players_on_base_percentage');
+        Route::get('players_batting_point', [PlayerRankingController::class, 'players_batting_point'])->name('players_batting_point');
+        Route::get('players_practice_running', [PlayerRankingController::class, 'players_practice_running'])->name('players_practice_running');
+        Route::get('players_practice_swing', [PlayerRankingController::class, 'players_practice_swing'])->name('players_practice_swing');
     });
 
     // ログアウト

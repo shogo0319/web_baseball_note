@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.leader')
 
 @section('content')
 @if (session('success'))
@@ -19,13 +19,13 @@
     <table class="table table-hover">
         <thead class="table-dark">
             <tr>
-            <th scope="col">日付</th>
-            <th scope="col">タイトル</th>
-            <th scope="col">素振り回数</th>
-            <th scope="col">走った距離</th>
-            <th scope="col">体重</th>
-            <th scope="col">調子</th>
-            <th scope="col">詳細</th>
+            <th scope="">日付</th>
+            <th scope="">タイトル</th>
+            <th scope="">素振り回数</th>
+            <th scope="">走った距離</th>
+            <th scope="">体重</th>
+            <th scope="">調子</th>
+            <th scope="">詳細</th>
             </tr>
         </thead>
         <tbody>
