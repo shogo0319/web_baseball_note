@@ -13,7 +13,7 @@ class PlayerController extends Controller
     {
         $users = User::get();
         // dd($users);
-        return view('leader.leader_players', compact('users'));
+        return view('leader.players', compact('users'));
     }
 
     public function players_notes_index($user)
