@@ -18,8 +18,8 @@ class PlayerController extends Controller
 
     public function players_notes_index($user)
     {
-        $notes = Note::where('user_id', $user)->latest()->paginate(10);
         $user = User::where('id', $user)->first();
+        $notes = Note::where('user_id', $user->id)->latest()->paginate(10);
         return view('leader.players_notes_index', compact('notes', 'user'));
     }
 

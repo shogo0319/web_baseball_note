@@ -25,10 +25,15 @@ class Grade extends Model
         5 => '敵失',
         6 => 'その他'
     ];
-    
+
     public function game()
     {
         return $this->belongsTo(Game::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
     public function getHitsAndAtBats()

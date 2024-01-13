@@ -71,4 +71,14 @@ class User extends Authenticatable
         return $this->hasMany(Note::class);
     }
 
+    public function grades()
+    {
+        return $this->hasMany(Grade::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
 }
