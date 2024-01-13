@@ -2,70 +2,47 @@
 
 @section('content')
 @if (session('success'))
-<div class="alert alert-success mt-3">
+<div class="alert alert-success mt-3 text-center">
     {{ session('success') }}
 </div>
 @endif
-
-<div class="d-flex flex-column justify-content-center align-items-center">
-  <div class="container col-8">
+<div class="container mt-5 mb-5 col-md-9">
     <div class="text-center">
-        <h3 class="my-5 text-secondary">ノート編集フォーム</h3>
+        <h1 class="mb-5">
+            <strong>タイトル：</strong>「{{ $note->title }}」
+        </h1>
     </div>
-    <form action="{{ route('note_update', $note->id) }}" method="post">
-        @csrf
-        <div class="mb-3">
-            <label for="title" class="form-label">タイトル <span class="badge bg-danger">必須</span></label>
-            <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" value="{{ $note->title }}" required>
-            @error('title')
-                <div class="alert alert-danger">{{ $message }}</div>
-            @enderror
-
+    <div class="card">
+        <div class="card-header">
+            <h4>{{ $note->created_at->format('Y-m-d') }}</h4>
         </div>
-        <div class="mb-3">
-            <label for="swing" class="form-label">素振り回数 <span class="badge bg-danger">必須</label>
-            <input type="number" class="form-control @error('swing') is-invalid @enderror" id="swing" name="swing" value="{{ $note->swing }}" required>
-            @error('swing')
-                <div class="alert alert-danger">{{ $message }}</div>
-            @enderror
+        <div class="card-body" style="font-size: 20px;">
+            <p><strong>素振り回数：</strong>{{ $note->swing }} 回</p>
+            <p><strong>走った距離：</strong>{{ $note->running }} km</p>
+            <p><strong>体重：</strong>{{ $note->weight }} kg</p>
+            <p><strong>調子：</strong>{{ $note->condition }}</p>
+            <p><strong>YouTubeリンク：</strong><a href="{{ $note->youtube_link }}" target="_blank">{{ $note->youtube_link }}</a></p>
+            <p><strong>メモ：</strong>{!! nl2br(e($note->memo)) !!}</p>
         </div>
-        <div class="mb-3">
-            <label for="running" class="form-label">ランニング距離(km) <span class="badge bg-danger">必須</label>
-            <input type="number" class="form-control @error('running') is-invalid @enderror" id="running" name="running" value="{{ $note->running }}" step="0.1" required>
-            @error('running')
-                <div class="alert alert-danger">{{ $message }}</div>
-            @enderror
-        </div>
-        <div class="mb-3">
-            <label for="practice" class="form-label">その他の練習内容 <span class="badge bg-secondary">任意</span></label>
-            <input type="text" class="form-control" id="practice" name="practice" value="{{ $note->practice }}">
-        </div>
-        <div class="mb-3">
-            <label for="weight" class="form-label">体重(kg) <span class="badge bg-danger">必須</label>
-            <input type="number" class="form-control @error('weight') is-invalid @enderror" id="weight" name="weight" value="{{ $note->weight }}" step="0.1" required>
-            @error('weight')
-                <div class="alert alert-danger">{{ $message }}</div>
-            @enderror
-        </div>
-        <div class="mb-3">
-            <label for="condition" class="form-label">調子 <span class="badge bg-danger">必須</label>
-            <input type="text" class="form-control @error('condition') is-invalid @enderror" id="condition" name="condition" value="{{ $note->condition }}"required>
-            @error('condition')
-                <div class="alert alert-danger">{{ $message }}</div>
-            @enderror
-        </div>
-        <div class="mb-3">
-            <label for="memo" class="form-label">今日の振り返り（気づきや学び、感想など自由に記述）<span class="badge bg-danger">必須</label>
-            <textarea class="form-control @error('memo') is-invalid @enderror" id="memo" name="memo" rows="3" required>{{ $note->memo }}</textarea>
-            @error('condition')
-                <div class="alert alert-danger">{{ $message }}</div>
-            @enderror
-        </div>
-        <div class="text-center mt-5 mb-3">
-            <input class="btn btn-outline-success" type="submit" value="更新する">
-            <a href="{{ route('notes_index') }}" class="btn btn-outline-secondary">一覧に戻る</a>
-        </div>
-    </form>
-  </div>
+    </div>
+    <div class="mt-5 text-center">
+        <a href="{{ route('players_notes_index' , $note->user->id) }}" class="btn btn-outline-secondary">ノート一覧に戻る</a>
+    </div>
 </div>
+
+
+<hr>
+<div class="container">
+    <div class="mt-5 mb-5 text-center form-floating">
+        <form action="{{ route('leader.comment_store', $note) }}" method="POST">
+            @csrf
+            <textarea class="form-control" name="comment" placeholder="コメントを入力" id="floatingTextarea2" style="height: 100px"></textarea>
+            <div class="mt-3 mb-5">
+                <button type="submit" class="btn btn-outline-success">コメントを作成</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
 @endsection

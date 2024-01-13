@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-10">
             <div class="d-flex justify-content-between align-items-center mb-5 mt-5">
                 <div class="text-center flex-grow-1">
                     <h3 class="text-secondary">素振りランキング</h3>
