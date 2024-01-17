@@ -26,4 +26,10 @@ class Comment extends Model
         return $this->belongsTo(Leader::class);
     }
 
+    public function getPosterAttribute()
+    {
+        return $this->leader_id ? $this->leader : $this->user;
+    }
+
+
 }

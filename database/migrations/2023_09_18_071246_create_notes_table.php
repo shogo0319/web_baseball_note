@@ -17,7 +17,7 @@ class CreateNotesTable extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained();
             $table->string('title', 255);
-            $table->text('practice');
+            $table->text('practice')->nullable();
             $table->integer('swing');
             $table->integer('running');
             $table->decimal('weight', 8, 2);
