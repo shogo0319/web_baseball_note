@@ -36,7 +36,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/note_create', [NoteController::class, 'create'])->name('note_create');
     Route::post('/note_store', [NoteController::class, 'store'])->name('note_store');
     Route::get('/note_edit/{id}', [NoteController::class, 'edit'])->name('note_edit');
-    Route::post('/note_update/{id}', [NoteController::class, 'update'])->name('note_update');
+    Route::put('/note_update/{id}', [NoteController::class, 'update'])->name('note_update');
     Route::delete('/note_delete/{id}', [NoteController::class, 'destroy'])->name('note_delete');
     Route::get('/note_detail/{id}', [NoteController::class, 'detail'])->name('note_detail');
 
@@ -55,6 +55,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/practice_swing', [RankingController::class, 'practice_swing'])->name('practice_swing');
 
     Route::post('/comment_store/{note}', [CommentController::class, 'store'])->name('comment_store');
+    Route::delete('/notes/{note}/comments/{comment}', [CommentController::class, 'destroy'])->name('comment_destroy');
 
     });
 

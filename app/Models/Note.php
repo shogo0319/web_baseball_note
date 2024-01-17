@@ -23,4 +23,14 @@ class Note extends Model
         return $this->hasMany(Comment::class);
     }
 
+
+    protected static function boot() {
+        parent::boot();
+
+        static::deleting(function ($note) {
+            $note->comments()->delete();
+        });
+}
+
+
 }

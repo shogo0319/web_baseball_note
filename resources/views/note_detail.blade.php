@@ -2,17 +2,20 @@
 
 @section('content')
 @if (session('success'))
-<div class="alert alert-success mt-3 text-center">
+<div class="text-center">
+    <div class="alert alert-success mt-3">
     {{ session('success') }}
+    </div>
 </div>
 @endif
 <div class="container mt-5 mb-5 col-md-9">
     <div class="text-center">
-        <h1 class="mb-5">
-            <strong>タイトル：</strong>「{{ $note->title }}」
+        <h5><strong>タイトル</strong></h5>
+        <h1 class="mb-5" style="word-wrap: break-word;">
+            「{{ $note->title }}」
         </h1>
     </div>
-    <div class="card">
+    <div class="card card border-dark">
         <div class="card-header d-flex justify-content-between">
             <div>
                 <h4>{{ $note->created_at->format('Y-m-d') }}</h4>
@@ -41,16 +44,31 @@
 <hr>
 <div class="container col-md-9">
     @foreach($note->comments as $comment)
-        <div>
-            <strong>
-                @if($comment->leader_id == null)
-                    {{ $comment->user->name }}  {{ $comment->user->created_at->format('Y-m-d H:i')}}
-                @elseif($comment->user_id == null)
-                    {{ $comment->leader->name }}  {{ $comment->leader->created_at->format('Y-m-d H:i') }}
-
-                @endif
-            </strong>
-            <p>{{ $comment->comment }}</p>
+        <div class="d-flex justify-content-center">
+            <div class="card card border-dark mt-3 mb-3" style="width: 50rem;">
+                <div class="card-header d-flex justify-content-between" style="font-size: 18px;">
+                    <div class="flex-grow-1">
+                        <strong>{{ $comment->poster->name }}</strong>
+                    </div>
+                    <div class="flex-grow-1 text-center">
+                        {{ $comment->created_at->format('Y-m-d H:i') }}
+                    </div>
+                    <div class="flex-grow-1 text-end">
+                        @if(auth()->id() == $comment->user_id)
+                            <form action="{{ route('comment_destroy', ['note' => $note->id, 'comment' => $comment->id]) }}" method="POST" style="display: inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return confirm('本当に削除してもよろしいですか？');">
+                                    削除
+                                </button>
+                            </form>
+                        @endif
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p>{!! nl2br(e($comment->comment)) !!}</p>
+                </div>
+            </div>
         </div>
     @endforeach
     <div class="mt-5 mb-5 text-center form-floating">

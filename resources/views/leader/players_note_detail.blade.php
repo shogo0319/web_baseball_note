@@ -35,9 +35,9 @@
         <div>
             <strong>
                 @if($comment->leader_id == null)
-                    {{ $comment->user->name }}  {{ $comment->user->created_at->format('Y-m-d H:i')}}
+                    {{ $comment->user->name }}  {{ $comment->created_at->format('Y-m-d H:i')}}
                 @elseif($comment->user_id == null)
-                    {{ $comment->leader->name }}  {{ $comment->leader->created_at->format('Y-m-d H:i') }}
+                    {{ $comment->leader->name }}  {{ $comment->created_at->format('Y-m-d H:i') }}
                 @endif
             </strong>
             <p>{{ $comment->comment }}</p>

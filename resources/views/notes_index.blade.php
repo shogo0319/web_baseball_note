@@ -9,14 +9,13 @@
 </div>
 @endif
 
-<div class="container">
+<div class="container col-md-9">
     <div class="d-flex justify-content-between align-items-center my-5">
         <div class="text-center flex-grow-1">
             <h3 class="text-secondary">ノート一覧</h3>
         </div>
-        <a href="{{ route('note_create') }}" class="btn btn-outline-primary ml-3">新規作成</a>
+        <a href="{{ route('note_create') }}" class="btn btn-outline-primary">新規作成</a>
     </div>
-
     <table class="table table-hover">
         <thead class="table-dark">
             <tr>
@@ -24,8 +23,6 @@
             <th scope="col">タイトル</th>
             <th scope="col">素振り回数</th>
             <th scope="col">走った距離</th>
-            <th scope="col">体重</th>
-            <th scope="col">調子</th>
             <th scope="col">詳細</th>
             </tr>
         </thead>
@@ -36,8 +33,6 @@
                 <td>{{ Str::limit($note->title, 20) }}</td>
                 <td>{{ $note->swing }} 回</td>
                 <td>{{ $note->running }} km</td>
-                <td>{{ $note->weight }} kg</td>
-                <td>{{ $note->condition }}</td>
                 <td>
                     <a href="{{ route('note_detail', $note->id) }}" class="btn btn-outline-info">詳細</a>
                 </td>

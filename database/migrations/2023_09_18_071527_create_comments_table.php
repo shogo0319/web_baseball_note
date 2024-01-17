@@ -17,7 +17,7 @@ class CreateCommentsTable extends Migration
             $table->id();
             $table->foreignId('user_id')->nullable()->constrained();
             $table->foreignId('note_id')->constrained();
-            $table->longText('comment');
+            $table->longText('comment')->nullable();
             $table->softDeletes();
             $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));
             $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
