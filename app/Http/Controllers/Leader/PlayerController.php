@@ -18,15 +18,19 @@ class PlayerController extends Controller
 
     public function players_notes_index($user)
     {
-        $user = User::where('id', $user)->first();
+        $user = User::findOrFail($user);
         $notes = Note::where('user_id', $user->id)->latest()->paginate(10);
-        return view('leader.players_notes_index', compact('notes', 'user'));
+
+        return view('leader.players_notes_index', compact('user', 'notes'));
     }
+
 
     public function players_note_detail($id)
     {
         $note = Note::findOrFail($id);
-        // dd($notes);
-        return view('leader.players_note_detail', compact('note'));
+        $user = $note->user; // ノートを作成したユーザーを取得
+
+        return view('leader.players_note_detail', compact('note', 'user'));
     }
+
 }

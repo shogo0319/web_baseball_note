@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\leader;
 
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\Comment;
 use App\Models\Note;
@@ -18,5 +19,16 @@ class LeaderCommentController extends Controller
         $comment->save();
 
         return back()->with('success', 'コメントを作成しました。');
+    }
+
+    public function destroy(Note $note, Comment $comment)
+    {
+        // コメントを削除する前に、ユーザーがそのコメントの所有者であることを確認する
+        if (Auth::id() == $comment->leader_id) {
+            $comment->delete();
+            return back()->with('success', 'コメントを削除しました。');
+        }
+
+        return back()->with('error', 'コメントの削除に失敗しました。');
     }
 }

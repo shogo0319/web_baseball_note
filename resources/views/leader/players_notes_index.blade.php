@@ -31,7 +31,7 @@
                 <td>{{ $note->swing }} 回</td>
                 <td>{{ $note->running }} km</td>
                 <td>
-                    <a href="{{ route('players_note_detail', $note->id) }}" class="btn btn-outline-info">詳細へ</a>
+                    <a href="{{ route('players_note_detail', $note->id) }}" class="btn btn-outline-info">詳細</a>
                 </td>
             </tr>
             @endforeach
