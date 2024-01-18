@@ -93,7 +93,8 @@ Route::group(['prefix' => 'leader'], function () {
         Route::get('players_practice_running', [PlayerRankingController::class, 'players_practice_running'])->name('players_practice_running');
         Route::get('players_practice_swing', [PlayerRankingController::class, 'players_practice_swing'])->name('players_practice_swing');
 
-        Route::post('notes_comment_store/{note}', [LeaderCommentController::class, 'store'])->name('leader.comment_store');
+        Route::post('leader_notes_comment_store/{note}', [LeaderCommentController::class, 'store'])->name('leader.comment_store');
+        Route::delete('leader_notes/{note}/comments/{comment}', [LeaderCommentController::class, 'destroy'])->name('leader.comment_destroy');
     });
 
     // ログアウト

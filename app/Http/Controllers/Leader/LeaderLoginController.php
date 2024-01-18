@@ -22,7 +22,7 @@ class LeaderLoginController extends Controller
         $credentials = $request->only(['email', 'password']);
 
         if (Auth::guard('leader')->attempt($credentials)) {
-            return redirect()->route('leader.home')->with([
+            return redirect()->route('leader_players')->with([
                 'login_msg' => 'ログインしました。',
             ]);
         }
