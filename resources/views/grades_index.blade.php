@@ -11,8 +11,8 @@
 
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card border-warning text-center mb-5 mt-5">
+        <div class="col-md-9">
+            <div class="card border-dark text-center mb-5 mt-5">
                 <div class="card-header" style="font-size: 20px;">
                   <strong>通算成績</strong>
                 </div>
@@ -35,11 +35,11 @@
                     </div>
                 </div>
             </div>
-            <div class="d-flex justify-content-between align-items-center mb-5 mt-5">
+            <div class="d-flex justify-content-between mb-5 mt-5">
                 <div class="text-center flex-grow-1">
                     <h3 class="text-secondary">成績一覧</h3>
                 </div>
-                    <a href="{{ route('grade_create') }}" class="btn btn-outline-primary">新規作成</a>
+                <a href="{{ route('grade_create') }}" class="btn btn-outline-primary">新規作成</a>
             </div>
             <table class="table table-hover">
                 <thead class="table-dark">
