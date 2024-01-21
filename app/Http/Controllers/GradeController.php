@@ -315,7 +315,7 @@ class GradeController extends Controller
             ['user_id' => $userId], // 検索条件
             ['point' => $totalRBIs] // 更新または作成する値
         );
-        
+
         return redirect('/grades')->with('success', '成績が削除されました！');
     }
 
