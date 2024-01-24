@@ -53,7 +53,7 @@
                             </div>
                         </div>
 
-                        <div class="mb-0">
+                        <div class="row mb-0">
                             <div class="col-md-8 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('ログイン') }}
