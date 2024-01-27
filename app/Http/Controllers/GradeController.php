@@ -170,7 +170,6 @@ class GradeController extends Controller
         $resultKinds = \DB::table('result_kinds')->get();
         $numberOfAtBats = 7;
 
-        // カラム名に合わせて各打席のデータを分割し、配列に保存
         $atBats = [];
         for ($i = 1; $i <= $numberOfAtBats; $i++) {
             $atBatKey = match($i) {

@@ -10,13 +10,11 @@ use Illuminate\View\View;
 
 class LeaderLoginController extends Controller
 {
-    // ログイン画面呼び出し
     public function showLoginPage(): View
     {
         return view('leader.auth.login');
     }
 
-    // ログイン実行
     public function login(Request $request): RedirectResponse
     {
         $credentials = $request->only(['email', 'password']);
@@ -32,7 +30,6 @@ class LeaderLoginController extends Controller
         ]);
     }
 
-    // ログアウト処理
     public function logout(Request $request)
     {
         Auth::guard('leader')->logout();

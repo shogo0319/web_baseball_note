@@ -12,7 +12,7 @@ class PlayerController extends Controller
     public function leader_players()
     {
         $users = User::get();
-        // dd($users);
+        
         return view('leader.players', compact('users'));
     }
 
@@ -28,7 +28,7 @@ class PlayerController extends Controller
     public function players_note_detail($id)
     {
         $note = Note::findOrFail($id);
-        $user = $note->user; // ノートを作成したユーザーを取得
+        $user = $note->user;
 
         return view('leader.players_note_detail', compact('note', 'user'));
     }
