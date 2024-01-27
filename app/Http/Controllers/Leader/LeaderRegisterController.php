@@ -15,13 +15,11 @@ use Illuminate\View\View;
 
 class LeaderRegisterController extends Controller
 {
-    // 登録画面呼び出し
     public function create(): View
     {
         return view('leader.auth.register');
     }
 
-    // 登録実行
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
