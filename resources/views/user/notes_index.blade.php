@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.user.app')
 
 @section('content')
 @if (session('success'))
@@ -14,7 +14,7 @@
         <div class="text-center flex-grow-1">
             <h3 class="text-secondary">ノート一覧</h3>
         </div>
-        <a href="{{ route('note_create') }}" class="btn btn-outline-primary">新規作成</a>
+        <a href="{{ route('user.note_create') }}" class="btn btn-outline-primary">新規作成</a>
     </div>
     <table class="table table-hover">
         <thead class="table-dark">
@@ -34,7 +34,7 @@
                 <td>{{ $note->swing }} 回</td>
                 <td>{{ $note->running }} km</td>
                 <td>
-                    <a href="{{ route('note_detail', $note->id) }}" class="btn btn-outline-info">詳細</a>
+                    <a href="{{ route('user.note_detail', $note->id) }}" class="btn btn-outline-info">詳細</a>
                 </td>
             </tr>
             @endforeach

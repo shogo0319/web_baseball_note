@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.user.app')
 
 @section('content')
 <div class="container">
@@ -12,7 +12,7 @@
             <div class="text-center">
                 <h3 class="my-5 text-secondary">個人成績編集フォーム</h3>
             </div>
-            <form action="{{ route('grade_update', $grade->game_id) }}" method="post">
+            <form action="{{ route('user.grade_update', $grade->game_id) }}" method="post">
                 @csrf
                 @method('POST')
                 <div class="mb-3">
@@ -90,7 +90,7 @@
                 </div>
                 <div class="text-center">
                     <input type="submit" value="更新" class="btn btn-outline-primary">
-                    <a href="{{ route('grades_index') }}" class="btn btn-outline-secondary">一覧に戻る</a>
+                    <a href="{{ route('user.grades_index') }}" class="btn btn-outline-secondary">一覧に戻る</a>
                 </div>
             </form>
         </div>

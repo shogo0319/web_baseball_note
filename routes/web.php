@@ -65,7 +65,7 @@ Route::middleware(['auth'])->group(function () {
 | 指導者用ルーティング
 |--------------------------------------------------------------------------
 */
-Route::group(['prefix' => 'leader'], function () {
+// Route::group(['prefix' => 'leader'], function () {
     // 登録
     Route::get('register', [LeaderRegisterController::class, 'create'])->name('leader.register');
 
@@ -99,4 +99,4 @@ Route::group(['prefix' => 'leader'], function () {
 
     // ログアウト
     Route::post('logout', [LeaderLoginController::class, 'logout'])->name('leader.logout');
-});
+// });

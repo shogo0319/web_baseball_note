@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\NoteController\StoreRequest;
 use App\Http\Requests\NoteController\UpdateRequest;
 use App\Models\Note;
@@ -12,20 +13,20 @@ class NoteController extends Controller
 {
     public function index()
     {
-        $notes = Note::where('user_id', auth()->id())->latest()->paginate(10);
-        return view('notes_index', compact('notes'));
+        $notes = Note::where('user_id', auth('user')->id())->latest()->paginate(10);
+        return view('user.notes_index', compact('notes'));
     }
 
     public function create()
     {
-        return view('note_create');
+        return view('user.note_create');
     }
 
     public function store(StoreRequest $request)
     {
-        $userId = auth()->id();
+        $userId = auth('user')->id();
         $note = new Note();
-        $note->user_id = auth()->id();
+        $note->user_id = $userId;
         $note->fill($request->all())->save();
 
         $totalRunningDistance = Note::where('user_id', $userId)->sum('running');
@@ -42,13 +43,13 @@ class NoteController extends Controller
             ['swing' => $totalSwing] // 更新または作成する値
         );
 
-        return redirect()->route('notes_index')->with('success', 'ノートが作成されました！');
+        return redirect()->route('user.notes_index')->with('success', 'ノートが作成されました！');
     }
 
         public function edit($id)
     {
         $note = Note::findOrFail($id);
-        return view('note_edit', compact('note'));
+        return view('user.note_edit', compact('note'));
     }
 
     public function update(UpdateRequest $request, $id)
@@ -56,7 +57,7 @@ class NoteController extends Controller
         $note = Note::findOrFail($id);
         $note->fill($request->all())->save();
 
-        $userId = auth()->id();
+        $userId = auth('user')->id();
         $totalRunningDistance = Note::where('user_id', $userId)->sum('running');
         // dd($totalRunningDistance);
         PracticeRunning::updateOrCreate(
@@ -71,18 +72,18 @@ class NoteController extends Controller
             ['swing' => $totalSwing] // 更新または作成する値
         );
 
-        return redirect()->route('note_detail', ['id' => $id])->with('success', 'ノートが更新されました！');
+        return redirect()->route('user.note_detail', ['id' => $id])->with('success', 'ノートが更新されました！');
     }
 
     public function destroy($id)
     {
         $note = Note::findOrFail($id);
-        if ($note->user_id !== auth()->id()) {
-            return redirect()->route('notes_index')->with('error', 'アクセス権限がありません！');
+        if ($note->user_id !== auth('user')->id()) {
+            return redirect()->route('user.notes_index')->with('error', 'アクセス権限がありません！');
         }
         $note->delete();
 
-        $userId = auth()->id();
+        $userId = auth('user')->id();
 
         $totalRunningDistance = Note::where('user_id', $userId)->sum('running');
         PracticeRunning::updateOrCreate(
@@ -95,12 +96,12 @@ class NoteController extends Controller
             ['user_id' => $userId], // 検索条件
             ['swing' => $totalSwing] // 更新または作成する値
         );
-        return redirect()->route('notes_index')->with('success', 'ノートが削除されました！');
+        return redirect()->route('user.notes_index')->with('success', 'ノートが削除されました！');
     }
 
     public function detail($id)
     {
         $note = Note::findOrFail($id);
-        return view('note_detail', compact('note'));
+        return view('user.note_detail', compact('note'));
     }
 }

@@ -1,4 +1,4 @@
-@extends('layouts.leader')
+@extends('layouts.leader.app')
 
 @section('content')
 @if (session('success'))
@@ -21,7 +21,7 @@
                 <h4>{{ $note->created_at->format('Y-m-d') }}</h4>
             </div>
             <div class="text-center">
-                <a href="{{ route('players_notes_index', ['user' => $user->id]) }}" class="btn btn-outline-secondary">ノート一覧へ戻る</a>
+                <a href="{{ route('leader.players_notes_index', ['user' => $user->id]) }}" class="btn btn-outline-secondary">ノート一覧へ戻る</a>
             </div>
         </div>
         <div class="card-body" style="font-size: 20px;">
@@ -48,8 +48,8 @@
                         {{ $comment->created_at->format('Y-m-d H:i') }}
                     </div>
                     <div class="flex-grow-1 text-end">
-                        @if(auth()->id() == $comment->leader_id)
-                            <form action="{{ route('leader.comment_destroy', ['note' => $note->id, 'comment' => $comment->id]) }}" method="POST" style="display: inline;">
+                        @if(auth('leader')->id() == $comment->leader_id)
+                            <form action="{{ route('leader.leader_notes_comments_destroy', ['note' => $note->id, 'comment' => $comment->id]) }}" method="POST" style="display: inline;">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return confirm('本当に削除してもよろしいですか？');">
@@ -66,7 +66,7 @@
         </div>
     @endforeach
     <div class="mt-5 mb-5 text-center form-floating">
-        <form action="{{ route('leader.comment_store', $note) }}" method="POST">
+        <form action="{{ route('leader.leader_notes_comment_store', $note) }}" method="POST">
             @csrf
             <textarea class="form-control" name="comment" placeholder="コメントを入力" id="floatingTextarea2" style="height: 100px"></textarea>
             <div class="mt-3 mb-5">

@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\GradeController\StoreRequest;
 use App\Http\Requests\GradeController\UpdateRequest;
 use App\Models\BattingAverage;
@@ -17,7 +18,7 @@ class GradeController extends Controller
 {
     public function index()
     {
-        $userId = auth()->id();
+        $userId = auth('user')->id();
         $grades = Grade::where('user_id', $userId)->get();
 
         $totalGames = $grades->count();
@@ -44,7 +45,7 @@ class GradeController extends Controller
         $onBasePercentage = $totalAtBats + $totalForHitBalls + $totalSacrificeFlies > 0 ?
         ($totalHits + $totalForHitBalls) / ($totalAtBats + $totalForHitBalls + $totalSacrificeFlies) :0;
 
-        return view('grades_index', compact('grades', 'average', 'totalHits', 'totalAtBats', 'totalGames', 'totalRBIs', 'onBasePercentage'));
+        return view('user.grades_index', compact('grades', 'average', 'totalHits', 'totalAtBats', 'totalGames', 'totalRBIs', 'onBasePercentage'));
     }
 
 
@@ -55,7 +56,7 @@ class GradeController extends Controller
         $results = \DB::table('result_kinds')->get();
 
         $numberOfAtBats = 7;
-        return view('grade_create', compact('positions', 'results', 'numberOfAtBats'));
+        return view('user.grade_create', compact('positions', 'results', 'numberOfAtBats'));
     }
 
     public function store(StoreRequest $request)
@@ -67,7 +68,7 @@ class GradeController extends Controller
         $game->score = $request->OwnScore . '-' . $request->OtherScore;
         $game->save();
 
-        $userId = auth()->id();
+        $userId = auth('user')->id();
 
         $grade = new Grade();
         $grade->user_id = $userId;
@@ -116,7 +117,7 @@ class GradeController extends Controller
             ['point' => $totalRBIs] // 更新または作成する値
         );
 
-        return redirect( route('grades_index') )->with('success', '成績が作成されました！');
+        return redirect( route('user.grades_index') )->with('success', '成績が作成されました！');
     }
 
     public function show($id)
@@ -125,7 +126,7 @@ class GradeController extends Controller
 
         $dailyPerformance = $this->calculatePerformance($grade);
 
-        return view('grade_show', compact('grade', 'dailyPerformance'));
+        return view('user.grade_show', compact('grade', 'dailyPerformance'));
     }
 
     private function calculatePerformance($grade)
@@ -190,7 +191,7 @@ class GradeController extends Controller
             }
         }
 
-        return view('grade_edit', compact('grade', 'positions', 'resultKinds', 'numberOfAtBats', 'atBats'));
+        return view('user.grade_edit', compact('grade', 'positions', 'resultKinds', 'numberOfAtBats', 'atBats'));
     }
 
 
@@ -217,7 +218,7 @@ class GradeController extends Controller
             'rbi' => $request->rbi,
         ]);
 
-        $userId = auth()->id();
+        $userId = auth('user')->id();
         $grades = Grade::where('user_id', $userId)->get();
         $totalHits = 0;
         $totalAtBats = 0;
@@ -252,7 +253,7 @@ class GradeController extends Controller
             ['point' => $totalRBIs] // 更新または作成する値
         );
 
-        return redirect()->route('grade_show', $id)->with('success', '成績が更新されました！');
+        return redirect()->route('user.grade_show', $id)->with('success', '成績が更新されました！');
     }
 
     public function destroy($id)
@@ -260,7 +261,7 @@ class GradeController extends Controller
         $grade = Grade::where('game_id', $id)->first();
         $grade->delete();
 
-        $userId = auth()->id();
+        $userId = auth('user')->id();
         $grades = Grade::where('user_id', $userId)->get();
         $totalHits = 0;
         $totalAtBats = 0;
@@ -295,7 +296,7 @@ class GradeController extends Controller
             ['point' => $totalRBIs] // 更新または作成する値
         );
 
-        return redirect('/grades')->with('success', '成績が削除されました！');
+        return redirect()->route('user.grades_index')->with('success', '成績が削除されました！');
     }
 
 

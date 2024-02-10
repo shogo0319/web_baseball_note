@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
+use App\Http\Controllers\Controller;
 use App\Models\BattingAverage;
 use App\Models\BattingPoint;
 use App\Models\OnBasePercentage;
@@ -15,34 +16,34 @@ class RankingController extends Controller
     {
         $battingAverages = BattingAverage::with('user')->orderBy('average', 'desc')->get();
 
-        return view('batting_average', compact('battingAverages'));
+        return view('user.batting_average', compact('battingAverages'));
     }
 
     public function on_base_percentage()
     {
         $onBasePercentages = OnBasePercentage::with('user')->orderBy('obp', 'desc')->get();
 
-        return view('on_base_percentage', compact('onBasePercentages'));
+        return view('user.on_base_percentage', compact('onBasePercentages'));
     }
 
     public function batting_point()
     {
         $battingPoints = BattingPoint::with('user')->orderBy('point', 'desc')->get();
 
-        return view('batting_point', compact('battingPoints'));
+        return view('user.batting_point', compact('battingPoints'));
     }
 
     public function practice_running()
     {
         $practiceRunnings = PracticeRunning::with('user')->orderBy('distant', 'desc')->get();
 
-        return view('practice_running', compact('practiceRunnings'));
+        return view('user.practice_running', compact('practiceRunnings'));
     }
 
     public function practice_swing()
     {
         $practiceSwings = PracticeSwing::with('user')->orderBy('swing', 'desc')->get();
 
-        return view('practice_swing', compact('practiceSwings'));
+        return view('user.practice_swing', compact('practiceSwings'));
     }
 }

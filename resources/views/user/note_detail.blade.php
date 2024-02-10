@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.user.app')
 
 @section('content')
 @if (session('success'))
@@ -21,13 +21,13 @@
                 <h4>{{ $note->created_at->format('Y-m-d') }}</h4>
             </div>
             <div class="text-center">
-                <a href="{{ route('note_edit', $note->id) }}" class="btn btn-outline-warning">編集</a>
-                <form action="{{ route('note_delete', $note->id) }}" method="POST" style="display:inline;">
+                <a href="{{ route('user.note_edit', $note->id) }}" class="btn btn-outline-warning">編集</a>
+                <form action="{{ route('user.note_delete', $note->id) }}" method="POST" style="display:inline;">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="btn btn-outline-danger" onclick="return confirm('本当に削除してもよろしいですか？');">削除</button>
                 </form>
-                <a href="{{ route('notes_index') }}" class="btn btn-outline-secondary">一覧に戻る</a>
+                <a href="{{ route('user.notes_index') }}" class="btn btn-outline-secondary">一覧に戻る</a>
             </div>
         </div>
         <div class="card-body" style="font-size: 20px;">
@@ -54,8 +54,8 @@
                         {{ $comment->created_at->format('Y-m-d H:i') }}
                     </div>
                     <div class="flex-grow-1 text-end">
-                        @if(auth()->id() == $comment->user_id)
-                            <form action="{{ route('comment_destroy', ['note' => $note->id, 'comment' => $comment->id]) }}" method="POST" style="display: inline;">
+                        @if(auth('user')->id() == $comment->user_id)
+                            <form action="{{ route('user.comment_destroy', ['note' => $note->id, 'comment' => $comment->id]) }}" method="POST" style="display: inline;">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return confirm('本当に削除してもよろしいですか？');">
@@ -72,7 +72,7 @@
         </div>
     @endforeach
     <div class="mt-5 mb-5 text-center form-floating">
-        <form action="{{ route('comment_store', $note) }}" method="POST">
+        <form action="{{ route('user.comment_store', $note) }}" method="POST">
             @csrf
             <textarea class="form-control" name="comment" placeholder="コメントを入力" id="floatingTextarea2" style="height: 100px"></textarea>
             <div class="mt-3 mb-5">

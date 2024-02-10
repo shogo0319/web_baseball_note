@@ -1,11 +1,11 @@
-@extends('layouts.app')
+@extends('layouts.user.app')
 
 @section('content')
 <div class="container col-md-8">
     <div class="text-center">
         <h3 class="my-5 text-secondary">ノート作成フォーム</h3>
     </div>
-    <form action="{{ route('note_store') }}" method="post" novalidate>
+    <form action="{{ route('user.note_store') }}" method="post" novalidate>
         @csrf
         <div class="mb-3">
             <label for="title" class="form-label"><strong>タイトル </strong><span class="badge bg-danger">必須</span></label>
@@ -66,7 +66,7 @@
         </div>
         <div class="text-center mt-5 mb-3">
             <input class="btn btn-outline-success" type="submit" value="作成する">
-            <a href="{{ route('notes_index') }}" class="btn btn-outline-secondary">一覧に戻る</a>
+            <a href="{{ route('user.notes_index') }}" class="btn btn-outline-secondary">一覧に戻る</a>
         </div>
     </form>
 </div>
