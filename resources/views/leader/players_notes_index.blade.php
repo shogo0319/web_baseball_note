@@ -1,4 +1,4 @@
-@extends('layouts.leader')
+@extends('layouts.leader.app')
 
 @section('content')
 @if (session('success'))
@@ -31,7 +31,7 @@
                 <td>{{ $note->swing }} 回</td>
                 <td>{{ $note->running }} km</td>
                 <td>
-                    <a href="{{ route('players_note_detail', $note->id) }}" class="btn btn-outline-info">詳細</a>
+                    <a href="{{ route('leader.players_note_detail', $note->id) }}" class="btn btn-outline-info">詳細</a>
                 </td>
             </tr>
             @endforeach
@@ -41,7 +41,7 @@
             {{$notes->onEachSide(1)->links('pagination::bootstrap-4')}}
         </div>
         <div class="mt-4 text-center">
-            <a href="{{ route('leader_players') }}" class="btn btn-outline-secondary">選手一覧に戻る</a>
+            <a href="{{ route('leader.leader_players') }}" class="btn btn-outline-secondary">選手一覧に戻る</a>
         </div>
     </div>
 @endsection

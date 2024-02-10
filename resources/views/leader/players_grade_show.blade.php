@@ -1,4 +1,4 @@
-@extends('layouts.leader')
+@extends('layouts.leader.app')
 
 @section('content')
 <div class="container">
@@ -54,7 +54,7 @@
                 </div>
             </div>
             <div class="text-center mt-5 mb-5">
-                <a href="{{ route('players_grades_index', $grade->user->id) }}" class="btn btn-outline-secondary">成績一覧に戻る</a>
+                <a href="{{ route('leader.players_grades_index', $grade->user->id) }}" class="btn btn-outline-secondary">成績一覧に戻る</a>
             </div>
         </div>
     </div>

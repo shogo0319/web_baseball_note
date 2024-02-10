@@ -19,6 +19,11 @@ class RouteServiceProvider extends ServiceProvider
      */
     public const HOME = '/notes';
 
+    public const LEADER_HOME = '/leader_players';
+
+    public const USER_HOME = '/user/notes';
+
+
     /**
      * The controller namespace for the application.
      *
@@ -33,19 +38,29 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
-        $this->configureRateLimiting();
+        RateLimiter::for('api', function (Request $request) {
+            return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
+        });
 
         $this->routes(function () {
-            Route::prefix('api')
-                ->middleware('api')
-                ->namespace($this->namespace)
+            Route::middleware('api')
+                ->prefix('api')
                 ->group(base_path('routes/api.php'));
 
             Route::middleware('web')
-                ->namespace($this->namespace)
-                ->group(base_path('routes/web.php'));
+                ->prefix('leader')
+                ->name('leader.')
+                ->group(base_path('routes/web_leader.php'));
+
+            Route::middleware('web')
+                ->prefix('user')
+                ->name('user.')
+                ->group(base_path('routes/web_user.php'));
+
+            // Route::middleware('web')
+            //     ->group(base_path('routes/web.php'));
         });
     }
 
