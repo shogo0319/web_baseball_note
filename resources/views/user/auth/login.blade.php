@@ -1,4 +1,4 @@
-@extends('layouts.leader.app')
+@extends('layouts.user.app')
 
 @section('content')
 <div class="container-fluid background-image-container" style="height: 100vh;">
@@ -12,7 +12,7 @@
                     <strong>ログイン</strong>
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="{{ route('leader.login.login') }}">
+                    <form method="POST" action="{{ route('user.login.login') }}">
                         @csrf
                         <div class="row mb-3">
                             <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('メールアドレス') }}</label>
@@ -58,7 +58,7 @@
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('ログイン') }}
                                 </button>
-                                <a href="{{ route('leader.create') }}" class="btn btn btn-success">{{ __('新規登録はこちら') }}</a>
+                                <a href="{{ route('user.create') }}" class="btn btn btn-success">{{ __('新規登録はこちら') }}</a>
 
                                 @if (Route::has('password.request'))
                                     <a class="btn btn-link" href="{{ route('password.request') }}" style="color: #D3D3D3;">

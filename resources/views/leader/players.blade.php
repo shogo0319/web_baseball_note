@@ -1,4 +1,4 @@
-@extends('layouts.leader')
+@extends('layouts.leader.app')
 
 @section('content')
 <div class="container col-md-9">
@@ -17,8 +17,8 @@
         @foreach($users as $user)
             <tr>
                 <td>{{ $user->name }}</td>
-                <td><a href="{{route('players_notes_index', $user )}}" class="btn btn-outline-info">この選手のノート一覧へ</a></td>
-                <td><a href="{{route('players_grades_index', $user )}}" class="btn btn-outline-info">この選手の成績一覧へ</a></td>
+                <td><a href="{{route('leader.players_notes_index', $user )}}" class="btn btn-outline-info">この選手のノート一覧へ</a></td>
+                <td><a href="{{route('leader.players_grades_index', $user )}}" class="btn btn-outline-info">この選手の成績一覧へ</a></td>
             </tr>
         @endforeach
         </tbody>

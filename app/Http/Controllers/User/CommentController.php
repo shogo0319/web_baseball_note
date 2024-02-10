@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
 use App\Models\Comment;
 use App\Models\Note;
 use Illuminate\Http\Request;
@@ -12,7 +13,7 @@ class CommentController extends Controller
     public function store(Request $request, Note $note)
     {
         $comment = new Comment();
-        $comment->user_id = auth()->id();
+        $comment->user_id = auth('user')->id();
         $comment->note_id = $note->id;
         $comment->comment = $request->comment;
         $comment->save();
@@ -22,7 +23,7 @@ class CommentController extends Controller
 
     public function destroy(Note $note, Comment $comment)
     {
-        if (Auth::id() == $comment->user_id) {
+        if (auth('user')->id() == $comment->user_id) {
             $comment->delete();
             return back()->with('success', 'コメントを削除しました。');
         }

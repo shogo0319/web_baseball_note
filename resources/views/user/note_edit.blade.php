@@ -1,11 +1,11 @@
-@extends('layouts.app')
+@extends('layouts.user.app')
 
 @section('content')
 <div class="container col-md-8">
     <div class="text-center">
         <h3 class="my-5 text-secondary">ノート編集フォーム</h3>
     </div>
-    <form action="{{ route('note_update', $note->id) }}" method="post" novalidate>
+    <form action="{{ route('user.note_update', $note->id) }}" method="post" novalidate>
         @csrf
         @method('PUT')
         <div class="mb-3">
@@ -67,7 +67,7 @@
         </div>
         <div class="text-center mt-5 mb-3">
             <input class="btn btn-outline-success" type="submit" value="更新する">
-            <a href="{{ route('notes_index') }}" class="btn btn-outline-secondary">一覧に戻る</a>
+            <a href="{{ route('user.notes_index') }}" class="btn btn-outline-secondary">一覧に戻る</a>
         </div>
     </form>
 </div>

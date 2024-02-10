@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.user.app')
 
 @section('content')
 <div class="container">
@@ -54,13 +54,13 @@
                 </div>
             </div>
             <div class="text-center mt-5 mb-5">
-                <a href="{{ route('grade_edit', [$grade->id]) }}" class="btn btn-outline-warning">編集</a>
-                <form action="{{ route('grade_delete', $grade->game_id) }}" method="POST" style="display:inline;">
+                <a href="{{ route('user.grade_edit', [$grade->id]) }}" class="btn btn-outline-warning">編集</a>
+                <form action="{{ route('user.grade_delete', $grade->game_id) }}" method="POST" style="display:inline;">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="btn btn-outline-danger" onclick="return confirm('本当に削除してもよろしいですか？');">削除</button>
                 </form>
-                <a href="{{ route('grades_index') }}" class="btn btn-outline-secondary">一覧に戻る</a>
+                <a href="{{ route('user.grades_index') }}" class="btn btn-outline-secondary">一覧に戻る</a>
             </div>
         </div>
     </div>

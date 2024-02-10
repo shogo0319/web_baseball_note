@@ -23,7 +23,7 @@ class LeaderCommentController extends Controller
 
     public function destroy(Note $note, Comment $comment)
     {
-        if (Auth::id() == $comment->leader_id) {
+        if (auth('leader')->id() == $comment->leader_id) {
             $comment->delete();
             return back()->with('success', 'コメントを削除しました。');
         }

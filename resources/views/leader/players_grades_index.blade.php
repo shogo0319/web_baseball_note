@@ -1,4 +1,4 @@
-@extends('layouts.leader')
+@extends('layouts.leader.app')
 
 @section('content')
 @if (session('success'))
@@ -57,13 +57,13 @@
                         <td>{{ $grade->game->place }}</td>
                         <td>{{ $grade->game->opponent }}</td>
                         <td>{{ $grade->game->score }}</td>
-                        <td><a href="{{route('players_grades_show',$grade)}}" class="btn btn-outline-info">詳細</a></td>
+                        <td><a href="{{route('leader.players_grades_show',$grade)}}" class="btn btn-outline-info">詳細</a></td>
                     </tr>
                     @endforeach
                 </tbody>
             </table>
             <div class="text-center mt-5">
-                <a href="{{ route('leader_players') }}" class="btn btn-outline-secondary">選手一覧に戻る</a>
+                <a href="{{ route('leader.leader_players') }}" class="btn btn-outline-secondary">選手一覧に戻る</a>
             </div>
         </div>
     </div>

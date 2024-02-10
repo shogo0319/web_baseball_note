@@ -1,4 +1,4 @@
-@extends('layouts.leader.app')
+@extends('layouts.user.app')
 
 @section('content')
 <div class="container-fluid background-image-container" style="height: 100vh;">
@@ -9,11 +9,26 @@
             </div>
             <div class="card border-dark" style="background-color: rgba(0, 0, 0, 0.5); color:#D3D3D3; font-size: 1.3em; border-radius: 30px;">
                 <div class="card-header text-center">
-                    <strong>ログイン</strong>
+                    <strong>新規登録</strong>
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="{{ route('leader.login.login') }}">
+                    <form method="POST" action="{{ route('user.store') }}">
                         @csrf
+
+                        <div class="row mb-3">
+                            <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('名前') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus style="background-color: rgba(0, 0, 0, 0); color: #D3D3D3; border: 1px solid #D3D3D3;">
+
+                                @error('name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
                         <div class="row mb-3">
                             <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('メールアドレス') }}</label>
 
@@ -32,7 +47,7 @@
                             <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('パスワード') }}</label>
 
                             <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" style="background-color: rgba(0, 0, 0, 0); color: #D3D3D3; border: 1px solid #D3D3D3;">
+                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password" autofocus style="background-color: rgba(0, 0, 0, 0); color: #D3D3D3; border: 1px solid #D3D3D3;">
 
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
@@ -43,28 +58,19 @@
                         </div>
 
                         <div class="row mb-3">
-                            <div class="col-md-6 offset-md-4">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }} style="background-color: rgba(0, 0, 0, 0); color: #D3D3D3; border: 1px solid #D3D3D3;">
-                                    <label class="form-check-label" for="remember">
-                                        {{ __('ログイン状態を保持する') }}
-                                    </label>
-                                </div>
+                            <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('確認用パスワード') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password" autofocus style="background-color: rgba(0, 0, 0, 0); color: #D3D3D3; border: 1px solid #D3D3D3;">
                             </div>
                         </div>
 
                         <div class="row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('ログイン') }}
+                            <div class="ol-md-6 offset-md-4">
+                                <button type="submit" class="btn btn-success">
+                                    {{ __('新規登録') }}
                                 </button>
-                                <a href="{{ route('leader.create') }}" class="btn btn btn-success">{{ __('新規登録はこちら') }}</a>
-
-                                @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}" style="color: #D3D3D3;">
-                                        {{ __('パスワードを忘れた方はこちら') }}
-                                    </a>
-                                @endif
+                                <a href="{{ route('user.login') }}" class="btn btn-primary">ログイン画面へ</a>
                             </div>
                         </div>
                     </form>

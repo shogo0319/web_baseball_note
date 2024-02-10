@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.user.app')
 
 @section('content')
 @if (session('success'))
@@ -39,7 +39,7 @@
                 <div class="text-center flex-grow-1">
                     <h3 class="text-secondary">成績一覧</h3>
                 </div>
-                <a href="{{ route('grade_create') }}" class="btn btn-outline-primary">新規作成</a>
+                <a href="{{ route('user.grade_create') }}" class="btn btn-outline-primary">新規作成</a>
             </div>
             <table class="table table-hover">
                 <thead class="table-dark">
@@ -58,7 +58,7 @@
                         <td>{{ $grade->game->place }}</td>
                         <td>{{ $grade->game->opponent }}</td>
                         <td>{{ $grade->game->score }}</td>
-                        <td><a href="{{route('grade_show',$grade)}}" class="btn btn-outline-info">詳細</a></td>
+                        <td><a href="{{route('user.grade_show',$grade)}}" class="btn btn-outline-info">詳細</a></td>
                     </tr>
                     @endforeach
                 </tbody>
