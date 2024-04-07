@@ -66,6 +66,7 @@ class Grade extends Model
         $ForHitBalls = 0;
         $sacrificeFlies = 0;
 
+        //$atBatNamesは使えない？
         foreach (['first_at_bat', 'second_at_bat', 'third_at_bat', 'fourth_at_bat', 'fifth_at_bat', 'sixth_at_bat', 'seventh_at_bat'] as $atBat) {
             $result = Result::where('name', $this->{$atBat})->first();
             if ($result) {
