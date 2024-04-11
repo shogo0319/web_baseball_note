@@ -8,12 +8,20 @@ use App\Http\Requests\NoteController\UpdateRequest;
 use App\Models\Note;
 use App\Models\PracticeRunning;
 use App\Models\PracticeSwing;
+use Illuminate\Http\Request;
 
 class NoteController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $notes = Note::where('user_id', auth('user')->id())->latest()->paginate(10);
+        $query = Note::where('user_id', auth('user')->id());
+
+        if ($request->search_date != '') {
+            $query->whereDate('created_at', '=', $request->search_date);
+        }
+
+        $notes = $query->latest()->paginate(10);
+        
         return view('user.notes_index', compact('notes'));
     }
 

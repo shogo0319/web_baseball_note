@@ -10,11 +10,23 @@
 @endif
 
 <div class="container col-md-9">
-    <div class="d-flex justify-content-center mt-5">
+    <div class="text-center mt-5">
         <h2 class="text-secondary">ノート一覧</h2>
     </div>
     <div class="d-flex justify-content-end mb-3">
         <a href="{{ route('user.note_create') }}" class="btn btn-outline-primary">新規作成</a>
+    </div>
+    <div class="d-flex justify-content-end align-items-center">
+        <div class="col-md-4">
+            <form action="{{ route('user.notes_index') }}" method="GET">
+                <div class="input-group mb-3">
+                    <input type="date" class="form-control" name="search_date" value="{{ request('search_date') }}">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="submit">検索</button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
     <table class="table table-hover">
         <thead class="table-dark">
