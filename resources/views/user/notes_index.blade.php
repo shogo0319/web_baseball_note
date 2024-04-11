@@ -10,10 +10,10 @@
 @endif
 
 <div class="container col-md-9">
-    <div class="d-flex justify-content-between align-items-center my-5">
-        <div class="text-center flex-grow-1">
-            <h3 class="text-secondary">ノート一覧</h3>
-        </div>
+    <div class="d-flex justify-content-center mt-5">
+        <h2 class="text-secondary">ノート一覧</h2>
+    </div>
+    <div class="d-flex justify-content-end mb-3">
         <a href="{{ route('user.note_create') }}" class="btn btn-outline-primary">新規作成</a>
     </div>
     <table class="table table-hover">
@@ -40,7 +40,7 @@
             @endforeach
         </tbody>
     </table>
-    <div class="ml-5">
+    <div class="d-flex justify-content-center my-5">
         {{$notes->onEachSide(1)->links('pagination::bootstrap-4')}}
     </div>
 </div>
