@@ -211,8 +211,7 @@ class GradeController extends Controller
             'game_at' => $request->date,
             'place' => $request->place,
             'opponent' => $request->opponent,
-            'OwnScore' => $request->OwnScore,
-            'OtherScore' => $request->OtherScore,
+            'score' => $request->OwnScore . '-' . $request->OtherScore,
         ]);
 
         $grade = Grade::where('game_id', $id)->first();
