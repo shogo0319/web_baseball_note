@@ -206,6 +206,15 @@ class GradeController extends Controller
             'OtherScore' => 'required|integer|min:0',
             'rbi' => 'integer|min:0',
         ]);
+        $game = Game::findOrFail($id);
+        $game->update([
+            'date' => $request->date,
+            'place' => $request->place,
+            'opponent' => $request->opponent,
+            'own_score' => $request->OwnScore,
+            'other_score' => $request->OtherScore,
+        ]);
+
         $grade = Grade::where('game_id', $id)->first();
         $grade->update([
             'first_at_bat' => $request->position_1 . ' ' . $request->result_1,
