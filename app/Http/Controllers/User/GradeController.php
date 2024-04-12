@@ -208,11 +208,11 @@ class GradeController extends Controller
         ]);
         $game = Game::findOrFail($id);
         $game->update([
-            'date' => $request->date,
+            'game_at' => $request->date,
             'place' => $request->place,
             'opponent' => $request->opponent,
-            'own_score' => $request->OwnScore,
-            'other_score' => $request->OtherScore,
+            'OwnScore' => $request->OwnScore,
+            'OtherScore' => $request->OtherScore,
         ]);
 
         $grade = Grade::where('game_id', $id)->first();
