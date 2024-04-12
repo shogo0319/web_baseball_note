@@ -2,10 +2,10 @@
 
 use App\Http\Controllers\Leader\Auth\RegisterController;
 use App\Http\Controllers\Leader\Auth\LoginController;
-use App\Http\Controllers\leader\LeaderCommentController;
+use App\Http\Controllers\Leader\LeaderCommentController;
 use App\Http\Controllers\Leader\PlayerController;
-use App\Http\Controllers\leader\PlayerGradeController;
-use App\Http\Controllers\leader\PlayerRankingController;
+use App\Http\Controllers\Leader\PlayerGradeController;
+use App\Http\Controllers\Leader\PlayerRankingController;
 use Illuminate\Support\Facades\Route;
 
 /*
