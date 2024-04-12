@@ -8,12 +8,12 @@
     </div>
 </div>
 @endif
-<div class="container mt-5 mb-5 col-md-9">
+<div class="container my-5 col-md-9">
     <div class="text-center">
         <h5><strong>タイトル</strong></h5>
-        <h1 class="mb-5" style="word-wrap: break-word;">
+        <h2 class="mb-5" style="word-wrap: break-word;">
             「{{ $note->title }}」
-        </h1>
+        </h2>
     </div>
     <div class="card card border-dark">
         <div class="card-header d-flex justify-content-between">
@@ -33,9 +33,14 @@
         <div class="card-body" style="font-size: 20px;">
             <p><strong>素振り回数：</strong>{{ $note->swing }} 回</p>
             <p><strong>走った距離：</strong>{{ $note->running }} km</p>
+            @if (!empty($note->practice))
+                <p><strong>その他の練習内容：</strong>{{ $note->practice }}</p>
+            @endif
+            @if (!empty($note->youtube_link))
+                <p><strong>YouTubeリンク：</strong><a href="{{ $note->youtube_link }}" target="_blank">YouTubeを見る</a></p>
+            @endif
             <p><strong>体重：</strong>{{ $note->weight }} kg</p>
             <p><strong>調子：</strong>{{ $note->condition }}</p>
-            <p><strong>YouTubeリンク：</strong><a href="{{ $note->youtube_link }}" target="_blank">{{ $note->youtube_link }}</a></p>
             <p><strong>メモ：</strong>{!! nl2br(e($note->memo)) !!}</p>
         </div>
     </div>
